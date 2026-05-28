@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNG-Farma · UCI · H. San Pedro</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#f4f6f8;color:#1a1a1a;min-height:100vh;}
+header{background:#2d8c85;color:white;padding:0 1rem;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+.hl{display:flex;align-items:center;gap:9px;}
+.hico{width:30px;height:30px;background:rgba(255,255,255,0.2);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.htit{font-size:14px;font-weight:700;}.hsub{font-size:10px;opacity:.7;margin-top:1px;}
+.rbtn{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;font-size:11px;font-weight:600;padding:5px 11px;border-radius:20px;cursor:pointer;white-space:nowrap;font-family:inherit;}
+.rbtn:hover{background:rgba(255,255,255,0.25);}
+main{max-width:660px;margin:0 auto;padding:1.1rem 1rem 5rem;}
+.scard{background:white;border-radius:12px;padding:1.1rem;margin-bottom:.9rem;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+.slabel{font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;}
+.srow{display:flex;gap:7px;position:relative;}
+.sinput{flex:1;border:1.5px solid #e5e7eb;border-radius:8px;padding:9px 13px;font-size:15px;outline:none;transition:border-color .15s;font-family:inherit;}
+.sinput:focus{border-color:#2d8c85;}
+.sinput::placeholder{color:#9ca3af;}
+.sdd{position:absolute;top:calc(100% + 4px);left:0;right:0;background:white;border:1.5px solid #2d8c85;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.12);z-index:50;max-height:320px;overflow-y:auto;display:none;}
+.sdd.open{display:block;}
+/* Cabecera de grupo en el dropdown */
+.ddg{padding:5px 12px 2px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#2d8c85;background:#f7fafa;border-bottom:1px solid #e9ecef;position:sticky;top:0;}
+/* Item de forma dentro del grupo */
+.ddi{padding:8px 12px 8px 16px;cursor:pointer;border-bottom:1px solid #f5f5f5;display:flex;align-items:center;gap:8px;}
+.ddi:last-child{border-bottom:none;}
+.ddi:hover,.ddi.sel{background:#edf7f6;}
+.ddi-forma{font-size:13px;font-weight:600;color:#1a1a1a;flex:1;}
+.ddi-com{font-size:11px;color:#6b7280;}
+.fchip{display:inline-block;font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px;background:#e0f2f0;color:#0f766e;white-space:nowrap;}
+.vrow{display:flex;gap:6px;margin-top:9px;}
+.vbtn{flex:1;padding:7px 6px;border:1.5px solid #e5e7eb;border-radius:7px;background:white;font-size:12px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .15s;text-align:center;font-family:inherit;}
+.vbtn.on{border-color:#2d8c85;background:#edf7f6;color:#2d8c85;}
+.rw{animation:fi .2s ease;}
+@keyframes fi{from{opacity:0;transform:translateY(3px);}to{opacity:1;transform:translateY(0);}}
+.rhead{background:white;border-radius:12px 12px 0 0;padding:.9rem 1.1rem;border-bottom:1px solid #e9ecef;display:flex;align-items:center;gap:9px;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+.rhico{width:34px;height:34px;background:#edf7f6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.rhtit{font-size:12px;font-weight:800;color:#1a1a1a;text-transform:uppercase;letter-spacing:.05em;}
+.qbox{background:#f0f4f3;padding:.8rem 1.1rem;}
+.ql{font-size:11px;color:#6b7280;margin-bottom:2px;}.qv{font-size:13px;font-weight:700;color:#1a1a1a;}
+.adhead{background:white;padding:.9rem 1.1rem .5rem;display:flex;align-items:center;gap:9px;margin-top:1px;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+.fields{background:white;padding:0 1.1rem .9rem;border-radius:0 0 12px 12px;box-shadow:0 2px 6px rgba(0,0,0,0.06);}
+.field{padding:.65rem 0;border-bottom:1px solid #f3f3f3;}.field:last-child{border-bottom:none;padding-bottom:.2rem;}
+.fq{font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:3px;}.fa{font-size:13px;color:#374151;line-height:1.55;}
+.abox{border-radius:0 6px 6px 0;padding:7px 11px;font-size:12px;line-height:1.5;margin-top:5px;}
+.ared{background:#fee2e2;border-left:3px solid #dc2626;color:#7f1d1d;}
+.aora{background:#fff7ed;border-left:3px solid #ea580c;color:#7c2d12;}
+.aamb{background:#fef3c7;border-left:3px solid #d97706;color:#78350f;}
+.agre{background:#d1fae5;border-left:3px solid #059669;color:#064e3b;}
+.stag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;display:inline-block;margin-top:5px;}
+.stm{background:#dbeafe;color:#1e40af;}.stia{background:#f3f4f6;color:#6b7280;}
+.nbadge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:5px;vertical-align:middle;}
+.n1b{background:#fecaca;color:#7f1d1d;}.n2b{background:#fed7aa;color:#7c2d12;}.n3b{background:#fef9c3;color:#713f12;}
+.mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;overflow-y:auto;padding:1rem;}
+.mbg.open{display:block;}
+.modal{background:white;border-radius:14px;max-width:640px;margin:48px auto 2rem;box-shadow:0 20px 50px rgba(0,0,0,0.18);animation:su .2s ease;}
+@keyframes su{from{transform:translateY(12px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.mh{padding:.9rem 1.1rem;border-bottom:1px solid #e9ecef;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:white;border-radius:14px 14px 0 0;z-index:1;}
+.mhtit{font-size:13px;font-weight:800;color:#2d8c85;text-transform:uppercase;letter-spacing:.04em;}
+.mcl{width:28px;height:28px;border:1px solid #e5e7eb;border-radius:6px;background:white;cursor:pointer;font-size:16px;color:#9ca3af;display:flex;align-items:center;justify-content:center;}
+.mcl:hover{background:#f3f4f6;}
+.acat{background:#c8857e;color:white;padding:.55rem 1.1rem;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;}
+.ait{border-bottom:1px solid #e9ecef;}
+.aih{padding:.6rem 1.1rem;font-size:13px;font-weight:600;color:#374151;display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:#f8f9fa;user-select:none;}
+.aih:hover{background:#f0f4f3;}
+.aib{display:none;padding:.7rem 1.1rem .9rem;font-size:13px;color:#374151;line-height:1.7;background:white;border-top:1px solid #f0f0f0;}
+.aib.open{display:block;}.aib ul{padding-left:15px;}.aib li{margin-bottom:4px;}
+.msrc{font-size:10px;color:#9ca3af;padding:.65rem 1.1rem;text-align:right;border-top:1px solid #e9ecef;}
+.msrc a{color:#2d8c85;text-decoration:none;}
+</style>
+</head>
+<body>
+<header>
+  <div class="hl">
+    <div class="hico">💊</div>
+    <div><div class="htit">SNG-Farma UCI</div><div class="hsub">UMI · Hospital Universitario San Pedro</div></div>
+  </div>
+  <button class="rbtn" onclick="openRec()">📋 Recomendaciones generales</button>
+</header>
+
+<main>
+  <div class="scard">
+    <div class="slabel">Consulta de medicación por sonda</div>
+    <div class="srow" id="srow">
+      <input class="sinput" id="inp" type="text" placeholder="Medicamento, principio activo o nombre comercial..."
+        autocomplete="off" autocorrect="off" autocapitalize="off"
+        oninput="handleInput(this.value)" onkeydown="handleKey(event)" onfocus="showDd()"/>
+      <div class="sdd" id="dd"></div>
+    </div>
+    <div class="vrow">
+      <button class="vbtn on" id="v-g" onclick="setVia('G')">📍 Gastrostomía / SNG</button>
+      <button class="vbtn" id="v-y" onclick="setVia('Y')">📍 Yeyunostomía / SNY</button>
+    </div>
+  </div>
+  <div id="res"></div>
+</main>
+
+<!-- MODAL RECOMENDACIONES -->
+<div class="mbg" id="mrec" onclick="if(event.target===this)closeRec()">
+  <div class="modal">
+    <div class="mh">
+      <div class="mhtit">📋 Recomendaciones generales SNG/SNY</div>
+      <button class="mcl" onclick="closeRec()">×</button>
+    </div>
+    <div class="acat" onclick="tcat(this)">Recomendaciones generales <span>∧</span></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Cuidados de la sonda <span>∨</span></div>
+    <div class="aib"><ul>
+      <li>Limpiar parte externa diariamente con agua y jabón.</li>
+      <li>Verificar fijación correcta. PEG: girar al menos <strong>una vuelta completa diaria</strong>.</li>
+      <li>Lavarse las manos antes de cada manipulación.</li>
+      <li>Cabecero <strong>≥30-40°</strong> durante NE y hasta 30-60 min después.</li>
+    </ul></div></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Resumen del procedimiento (UCI San Pedro) <span>∨</span></div>
+    <div class="aib">
+    <ol style="padding-left:16px;">
+      <li>Parar la NE si es continua (<strong>15 min</strong> si compatible / <strong>30 min</strong> si incompatible).</li>
+      <li>Comprobar los <strong>10 correctos</strong>.</li>
+      <li>Preparar el medicamento. Identificar el contenido de la bolsa de trituración con el embalaje original.</li>
+      <li>Comprobar en el tratamiento médico y <strong>firmar</strong> (reflejar valor si es medicación condicionada).</li>
+      <li>Administrar la medicación. Reanudar la NE si la hubiera. Si no hay NE, <strong>pinzar la sonda 30 min</strong>.</li>
+      <li>Recoger y dejar la jeringa limpia y protegida para la siguiente administración.</li>
+      <li>Registrar en el programa informático.</li>
+      <li>Retirar guantes e higiene de manos.</li>
+    </ol>
+    </div></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Antes de la administración <span>∨</span></div>
+    <div class="aib">
+    <ul>
+      <li>Comprobar tipo y posición de la sonda.</li>
+      <li>Lavar la sonda con <strong>20 ml de agua</strong> con jeringa ENFit (morada) para comprobar permeabilidad.</li>
+      <li>Si la NE es continua y el fármaco es <strong>compatible</strong>: parar NE <strong>15 min antes</strong>.</li>
+      <li>Si el fármaco es <strong>no compatible</strong>: parar NE <strong>30 min antes</strong> (norma UCI San Pedro). Excepciones indicadas en la ficha del fármaco.</li>
+    </ul>
+    </div></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Forma farmacéutica — orden de preferencia <span>∨</span></div>
+    <div class="aib"><strong>1.º Líquida</strong> (sol/suspensión) → <strong>2.º Dispersar/disgregar</strong> → <strong>3.º Triturar</strong>.<br><br>
+    <strong>NUNCA triturar:</strong> liberación modificada (retard/XR/LP/Crono), cubierta entérica en vía gástrica.<br>
+    <strong>MP Riesgo 1+2 sólidos:</strong> si hay que triturar, usar equipo triturador + cortador manual + guantes nitrilo + gafas.</div></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Interacción fármacos–NE — Norma UCI San Pedro <span>∨</span></div>
+    <div class="aib">
+    <strong>Fármaco COMPATIBLE con NE:</strong> no precisa interrupción. Parar solo 15 min antes para evitar contacto físico.<br><br>
+    <strong>Fármaco NO COMPATIBLE (norma general):</strong><br>
+    Parar NE → esperar <strong>30 min</strong> → administrar fármaco → esperar <strong>30 min</strong> → reiniciar NE.<br><br>
+    <strong>Fármaco NO COMPATIBLE — grupos especiales (indicado en ficha):</strong><br>
+    Antiepilépticos, inmunosupresores, antibióticos, antifúngicos y antivirales incompatibles:<br>
+    Parar NE → esperar <strong>1h</strong> → administrar → esperar <strong>2h</strong> → reiniciar NE.<br>
+    <strong>Fenitoína:</strong> Parar NE → esperar <strong>2h</strong> → administrar → esperar <strong>2h</strong> → reiniciar NE.<br><br>
+    <strong>Si no hay NE activa:</strong> tras administrar la medicación, pinzar la sonda <strong>30 minutos</strong>.
+    </div></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Durante la administración <span>∨</span></div>
+    <div class="aib"><ul>
+      <li><strong>Nunca añadir fármacos al envase de NE.</strong></li>
+      <li>Una jeringa ENFit (morada) por fármaco. Nunca mezclar.</li>
+      <li>Orden de administración: primero los <strong>líquidos</strong> (menos viscosos), luego los más espesos, <strong>sólidos al final</strong>.</li>
+      <li>Lavar con <strong>10-15 ml de agua</strong> entre cada medicamento.</li>
+      <li>Lavar con <strong>50 ml de agua</strong> al finalizar toda la medicación.</li>
+    </ul></div></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Cuidados del material <span>∨</span></div>
+    <div class="aib"><ul>
+      <li>Usar siempre <strong>jeringa ENFit (morada) de 50-60 ml</strong>. Nunca jeringas IV.</li>
+      <li>Lavar la jeringa con agua tras cada uso. Dejarla limpia y protegida para la siguiente administración. Vida útil máxima: <strong>3-4 días</strong>.</li>
+      <li>Equipo de infusión de NE: cambiar cada <strong>24 horas</strong>.</li>
+    </ul></div></div>
+
+    <div class="acat" onclick="tcat(this)">Normas por forma farmacéutica <span>∧</span></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Líquidas (sol, suspensión, jarabe, gotas) <span>∨</span></div>
+    <div class="aib">Forma de elección. Suspensiones/soluciones > jarabes.<br><br><ul>
+      <li><strong>Osmolaridad alta:</strong> diluir ≥30-60 mL agua para SNG. Para <strong>SNY: diluir siempre en 100 mL</strong> (menor tolerancia osmolar en yeyuno).</li>
+      <li><strong>Sorbitol >10 g/día:</strong> diluir para evitar distensión/diarrea.</li>
+      <li><strong>Viscosidad alta:</strong> diluir ≥30 mL para evitar obstrucción.</li>
+    </ul></div></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Comprimidos LI / Grageas <span>∨</span></div>
+    <div class="aib"><strong>Dispersión (preferida):</strong> Retirar émbolo jeringa 20-60 mL → introducir comp → añadir 15-30 mL agua templada → agitar 3-15 min → administrar → lavar 30 mL.<br><br>
+    <strong>Trituración:</strong> Mortero hasta polvo fino → disolver 15-30 mL agua → administrar → lavar 30 mL.<br><br>
+    <strong>Efervescentes:</strong> Disolver en 30 mL agua, esperar efervescencia completa.<br><br>
+    <strong>Cubierta entérica SNG:</strong> NO triturar. <strong>Cubierta entérica SNY:</strong> SÍ se puede triturar.<br><br>
+    <strong>⚠️ Liberación modificada (retard/XR/LP/Crono):</strong> NUNCA triturar.</div></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Cápsulas <span>∨</span></div>
+    <div class="aib"><strong>Duras:</strong> Abrir, disolver 10-20 mL agua, lavar 5-10 mL.<br>
+    Microgránulos LM: abrir pero NO triturar microgránulos.<br>
+    Microgránulos entéricos: disolver en líquido ácido (zumo manzana).<br><br>
+    <strong>Blandas:</strong> Extraer líquido con aguja fina, diluir 10-30 mL agua. Mayor riesgo obstrucción.</div></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Medicamentos peligrosos (MP) — equipos de protección <span>∨</span></div>
+    <div class="aib">
+    <strong style="color:#7f1d1d;">MP Riesgo 1 — Antineoplásicos (formas sólidas)</strong><br>
+    <ul style="margin:4px 0 10px;">
+      <li>Administrar siempre con <strong>guantes de nitrilo</strong>.</li>
+      <li>Si hay que triturar o fraccionar: <strong>equipo triturador + cortador manual + guantes nitrilo + gafas de protección</strong>.</li>
+      <li>Residuos → <strong>Contenedor azul</strong>.</li>
+    </ul>
+    <strong style="color:#7c2d12;">MP Riesgo 2 — No antineoplásicos (formas sólidas)</strong><br>
+    <ul style="margin:4px 0 10px;">
+      <li>Administrar siempre con <strong>guantes de nitrilo</strong>.</li>
+      <li>Si hay que triturar o fraccionar: <strong>equipo triturador + cortador manual + guantes nitrilo + gafas de protección</strong>.</li>
+      <li>Residuos → <strong>Contenedor azul</strong>.</li>
+    </ul>
+    <strong style="color:#7c2d12;">MP Riesgo 2 — No antineoplásicos (formas líquidas)</strong><br>
+    <ul style="margin:4px 0 10px;">
+      <li>Administrar con <strong>guantes de nitrilo</strong>.</li>
+      <li>Añadir <strong>bata + protección ocular</strong> si riesgo de salpicadura (p.ej. administración por sonda o paciente no colaborador).</li>
+      <li>Si posibilidad de inhalación (p.ej. polvos en suspensión): <strong>mascarilla FPP3</strong>.</li>
+      <li>Fármacos líquidos Riesgo 2: Espironolactona, Micofenolato de Mofetilo, Ciclosporina.</li>
+      <li>Residuos → <strong>Contenedor azul</strong>.</li>
+    </ul>
+    <strong style="color:#713f12;">MP Riesgo 3 — Riesgo reproductivo (formas sólidas)</strong><br>
+    <ul style="margin:4px 0 10px;">
+      <li><strong>No se precisa protección especial</strong>, salvo que el/la manipulador/a esté en situación de riesgo reproductivo.</li>
+      <li>En caso de riesgo reproductivo: guantes de nitrilo para administrar; si hay que triturar: equipo triturador + cortador manual + guantes + gafas.</li>
+      <li>Residuos → <strong>Bolsa verde</strong>.</li>
+    </ul>
+    <strong style="color:#713f12;">MP Riesgo 3 — Riesgo reproductivo (formas líquidas)</strong><br>
+    <ul style="margin:4px 0 6px;">
+      <li><strong>No se precisa protección especial</strong>, salvo situación de riesgo reproductivo. En ese caso: seguir las mismas indicaciones de los grupos Riesgo 1 y 2.</li>
+      <li>Fármacos líquidos Riesgo 3: Ácido Valproico (sol), Voriconazol (sol).</li>
+      <li>Residuos → <strong>Bolsa verde</strong>.</li>
+    </ul>
+    </div></div>
+
+    <div class="msrc">Protocolo UMI · Hospital Universitario San Pedro de Logroño</div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// OVERRIDES MANUALES — PRIORIDAD MÁXIMA (H. San Pedro)
+// Clave: nm(principio+forma) p.ej. "acenocumarolcomp"
+// ══════════════════════════════════════════════════════
+const MANUAL = {};
+
+// Expansión códigos NE
+const NE = {
+  S:"Compatible con la NE",
+  N1:"No compatible. Separar 1h antes y 2h después de la NE",
+  N2:"No compatible. Separar 2h antes y 2h después de la NE",
+  ND:"Administrar inmediatamente después de la NE",
+  NA:"Administrar 1h antes de la NE",
+  N30:"Administrar 30 min antes de la NE",
+  N15:"Administrar 15 min antes de la NE",
+  NF:"Compatible (separar si NE con fibra)",
+  NC:"No compatible. Ver notas.",
+  NV:"No compatible. Administrar coincidiendo con NE."
+};
+
+// ══════════════════════════════════════════════════════
+// BASE DE DATOS — UNA ENTRADA POR FORMA FARMACÉUTICA
+// [principio, comercial, forma, g_SNG, y_SNY, ne_code, notas, niosh]
+// ══════════════════════════════════════════════════════
+const DB = [
+["Tacrolimus","Advagraf®","Cap Lib Pro","NO manipular. NO administrar por sonda (liberación prolongada). Usar Modigraf® solución.","NO por esta vía.","N_1H","MP Riesgo 2. No usar sondas de PVC. Tacrolimus LP: no triturar.",2],
+["Micofenolato de mofetilo","Micofenolato EFG, CellCept®","Cap","NO manipular. Usar únicamente la presentación en solución (1g/5ml). Separar NE 1h antes y 2h después.","NO manipular.","N1H","MP Riesgo 2. Doble guante + protección. Contiene sorbitol (sol).",2],
+["Abacavir","Ziagen®","Comp Rec","NO manipular. Sustituir por Sol Jar, ajustando posología.","NO manipular.","S","NIOSH-2.",2],
+["Abacavir","Ziagen®","Sol Jar","Diluir 25-30 ml agua, administrar inmediatamente","Igual que gástrica","S","NIOSH-2. Doble guante.",2],
+["Abacavir / Lamivudina","Avacavir/Lamivudina Teva EFG","Comp Rec","NO manipular la forma sólida. Solicitar presentación alternativa.","NO manipular.","S","NIOSH-2.",2],
+["Abacavir / Lamivudina / Dolutegravir","Triumeq®","Comp Rec","NO manipular la forma sólida. Solicitar presentación alternativa.","NO manipular.","S","NIOSH-2.",2],
+["Abacavir / Lamivudina / Zidovudina","Trizivir®","Comp Rec","NO manipular la forma sólida. Solicitar presentación alternativa.","NO manipular.","S","NIOSH-2.",2],
+["Abiraterona","Zytiga®","Comp / Comp Rec","NO manipular la forma sólida. Solicitar presentación alternativa.","NO manipular.","S","NIOSH-1.",1],
+["Acenocumarol","Sintrom®","Comp","Triturar, diluir 15-20 ml agua, administrar inmediatamente","Igual que gástrica","S","NIOSH-3. Guantes+mascarilla+bata. Triturar en bolsa hermética. Controlar coagulación frecuentemente.",3],
+["Acetazolamida","Edemox®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Acetilcisteína","Acetilcisteína EFG","Sobre","Diluir en 50 ml agua","NO (pH<3.5, puede precipitar en yeyuno)","N1","Elevada osmolaridad. Preparar en el momento.",0],
+["Ácido acetilsalicílico","AAS®","Comp","Desleír en 15-20 ml agua, administrar inmediatamente","Igual que gástrica","S","Preferentemente con NE para disminuir molestias GI.",0],
+["Ácido acetilsalicílico","Aspirina®","Comp","Desleír en 10-20 ml agua, administrar inmediatamente","Igual que gástrica","S","Preferentemente con NE.",0],
+["Ácido acetilsalicílico","Adiro® 100 mg","Comp Ent","NO triturar (cubierta entérica). Sustituir por Aspirina® comp o AAS® comp.","NO triturar.","S","Solo existe la presentación de 100 mg. La de 300 mg fue retirada.",0],
+["Ácido acetilsalicílico","Tromalyt®","Cap","NO triturar (microgránulos entéricos y LM). Sustituir por Aspirina® comp o AAS® comp.","NO triturar.","S","",0],
+["Aciclovir","Aciclovir EFG","Comp","Triturar, diluir 15-20 ml agua","NO (pH<3.5, puede precipitar en yeyuno)","S","",0],
+["Agomelatina","Valdoxan®","Comp Rec","Triturar, diluir 15-20 ml agua, administrar inmediatamente","Igual que gástrica","S","",0],
+["Albendazol","Eskazole®","Comp Rec","NO triturar (fabricante). consultar con prescriptor.","NO triturar.","S","",0],
+["Almagato","Almax Forte®","Sobre","Diluir en 25 ml agua, administrar inmediatamente","NO (no administrar por SNY)","N1","",0],
+["Alopurinol","Alopurinol EFG","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Alprazolam","Alprazolam EFG","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Posible vía sublingual si tolera.",0],
+["Alprazolam","Trankimazin® Retard","Comp Lib M","NO triturar. Sustituir por alprazolam LI ajustando posología.","NO triturar.","S","",0],
+["Amantadina","Amantadine®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","",0],
+["Amilasa / Lipasa / Proteasa","Kreon®","Cap","Abrir, suspender microgránulos en 10 ml bicarbonato sódico 1M","Igual que gástrica","S","No triturar microgránulos. Precaución obstrucción sonda fina.",0],
+["Amilorida / Hidroclorotiazida","Ameride®","Comp","Desleír 10-20 ml agua, administrar inmediatamente","Igual que gástrica","S","Disolver correctamente: puede irritar.",0],
+["Aminocaproico, ácido","Caproamin® Amp/Vial","Amp/Vial","Administrar directamente","Igual que gástrica","S","",0],
+["Amiodarona","Trangorex®","Comp","Desleír 10-20 ml agua, administrar inmediatamente","Igual que gástrica","S","Proteger de la luz. Contiene yodo (75 mg/comp).",0],
+["Amisulprida","Solian®","Comp Rec","Triturar, diluir 15-20 ml agua","No evidencia por esta vía","N1","",0],
+["Amitriptilina","Triptizol®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Amlodipino","Amlodipino EFG","Comp","Desleír 10-20 ml agua, administrar inmediatamente","Igual que gástrica","S","Preferentemente con NE.",0],
+["Amoxicilina","Amoxicilina EFG","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","Preferentemente con NE.",0],
+["Amoxicilina / Clavulánico","Amoxicilina/Clavulánico EFG, Augmentine®","Sobre","Diluir en 20 ml agua, administrar inmediatamente","Igual que gástrica","S","Preferentemente con NE.",0],
+["Anagrelida","Xagrid®","Cap","NO administrar por sonda. consultar con prescriptor.","NO administrar.","S","",0],
+["Anastrozol","Anastrozol EFG","Comp Rec","Desleír 10-20 ml agua","Igual que gástrica","S","NIOSH-1. No manipular sólidos.",1],
+["Apixabán","Eliquis®","Comp Rec","Triturar, diluir 60 ml agua, administrar inmediatamente","Igual que gástrica","S","",0],
+["Aripiprazol","Abilify® Comp Liot","Comp Liot","Desleír 10-20 ml agua","Igual que gástrica","S","Bucodispersable si tolera.",0],
+["Asenapina","Sycrest®","Comp Sl","NO (formulado para absorción sublingual)","NO por esta vía","S","",0],
+["Atazanavir","Reyataz®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","Preferentemente con NE para aumentar biodisponibilidad.",0],
+["Atenolol","Atenolol EFG","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Se recomienda separar de NE (reduce biodisponibilidad).",0],
+["Atorvastatina","Cardyl®, Atorvastatina EFG","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Administrar preferentemente por la noche.",0],
+["Azatioprina","Imurel®","Comp Rec","NO manipular la forma sólida. Usar únicamente la presentación en solución (diluir 10-20 ml agua).","Igual que gástrica (FM)","S","NIOSH-2. Doble guante + protección.",2],
+["Azitromicina","Zitromax®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Preferentemente con NE.",0],
+["Azitromicina","Zitromax®","Sobre","Disolver en 20 ml agua, administrar inmediatamente","Igual que gástrica","S","",0],
+["Baclofeno","Lioresal®","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","Preferentemente con NE.",0],
+["Bentazepam","Tiadipona®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Betahistina","Betahistina EFG","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Bicalutamida","Casodex®","Comp Rec","Desleír (no triturar;  si dudas)","Igual que gástrica","S","NIOSH-1.",1],
+["Bicarbonato sódico","Bicarbonato Sódico NM","Polvo Sobre","Disolver en 50 ml agua hasta disolución completa","NO (no administrar por SNY)","NC","Administrar 20 min-1h después de NE. Riesgo distensión gástrica.",0],
+["Bicarbonato sódico","Bicarbonato Sódico 1M","Amp/Vial","Diluir en 10 ml agua, administrar inmediatamente","Igual que gástrica","S","Puede emplearse el Amp/Vial ajustando posología (8,4%).",0],
+["Biperideno","Akineton®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Biperideno","Akineton® Retard","Comp Lib M","NO triturar. Sustituir por LI ajustando posología.","NO triturar.","S","",0],
+["Bisoprolol","Emconcor®, Bisoprolol EFG","Comp Rec","Desleír 10-20 ml agua","Igual que gástrica","S","Administrar por la mañana antes de NE.",0],
+["Bosentan","Tracleer®","Comp","Desleír 10-20 ml agua, no en medio ácido","Igual que gástrica","S","NIOSH-3. Guantes+mascarilla+bata.",3],
+["Bromazepam","Bromazepam EFG, Lexatin®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","",0],
+["Bromocriptina","Parlodel®","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","Preferentemente con NE.",0],
+["Budesonida","Entocord®","Cap Lib M","Abrir, suspender microgránulos en 25 ml agua o zumo ácido","NO (microgránulos entéricos)","N1","No triturar microgránulos. Precaución obstrucción sonda fina.",0],
+["Buprenorfina","Buprex®","Comp Sl","NO (formulado para absorción sublingual)","NO por esta vía","S","",0],
+["Buprenorfina / Naloxona","Suboxone®","Comp Sl","NO (formulado para absorción sublingual)","NO por esta vía","S","",0],
+["Bupropión","Elontril®, Zyntabac®","Comp Lib M","NO triturar. consultar con prescriptor.","NO triturar.","S","",0],
+["Butilescopolamina","Buscapina®","Comp Rec","Sustituir por Buscapina® Amp/Vial, ajustando posología.","Sustituir por Amp.","S","",0],
+["Butilescopolamina","Buscapina®","Amp/Vial","Administrar directamente","Igual que gástrica","S","Se recomienda la ampolla.",0],
+["Butilescopolamina / Metamizol","Buscapina® Compositum","Comp Rec","Sustituir por Buscapina® Compositum Amp/Vial.","Sustituir por Amp.","S","",0],
+["Butilescopolamina / Metamizol","Buscapina® Compositum","Amp/Vial","Administrar directamente","Igual que gástrica","S","Se recomienda la ampolla.",0],
+["Calcifediol","Hidroferol®","Amp Beb / Gts","Diluir 25-30 ml agua, administrar inmediatamente","Igual que gástrica","S","Riesgo obstrucción por consistencia oleosa.",0],
+["Calcio carbonato / Lactogluconato","Calcium Sandoz®","Comp Efv","Disolver en 20 ml agua, administrar terminada efervescencia","Igual que gástrica","ND","Separar 2h después de NE. Separar del resto de medicación.",0],
+["Calcio, acetato","Royen®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","",0],
+["Calcio, carbonato","Mastical®","Comp Mas","Desleír 10-20 ml agua","Igual que gástrica","ND","Separar 2h después de NE. Separar del resto de medicación.",0],
+["Calcio carbonato / Colecalciferol","Mastical D®","Comp Mas","Triturar, diluir 15-20 ml agua","Igual que gástrica","ND","Separar 2h después de NE.",0],
+["Calcitriol","Rocaltrol®","Cap","NO administrar (riesgo obstrucción). Contactar SF.","NO por esta vía","S","",0],
+["Captopril","Captopril EFG","Comp","Desleír 10-20 ml agua","Igual que gástrica","N1","La NE reduce absorción ~30-40%.",0],
+["Carbamazepina","Carbamazepina EFG, Tegretol®","Comp","NO manipular la forma sólida. Usar únicamente la presentación en solución.","Igual que gástrica (FM)","N_1H","NIOSH-2. Doble guante + protección.",2],
+["Carvedilol","Carvedilol EFG","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Con NE reduce hipotensión ortostática.",0],
+["Cefditoreno","Meiact®","Comp Rec","NO (AEMPS no recomienda trituración)","NO por esta vía","S","",0],
+["Cefixima","Cefixima EFG","Cap","Abrir cápsula, diluir 20 ml agua","NO (absorción principalmente gástrica)","N_1H","",0],
+["Cefuroxima","Cefuroxima EFG","Comp Rec","NO triturar. Usar Zinnat® sol oral.","NO triturar.","S","Administrar justo después de la NE.",0],
+["Cefuroxima","Zinnat®","Sol Jar","Disolver en 20 ml agua, administrar inmediatamente","Igual que gástrica","S","",0],
+["Cetirizina","Cetirizina EFG","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Cianocobalamina","Optovite® B12","Amp/Vial","Administrar directamente","Igual que gástrica","N1","",0],
+["Ciclofosfamida","Genoxal®","Comp","NO manipular la forma sólida. Usar únicamente la presentación en solución.","Igual que gástrica (FM)","S","NIOSH-1. Doble guante + protección.",1],
+["Ciclosporina","Sandimmun®","Cap","NO manipular la forma sólida. Solicitar presentación alternativa.","NO manipular.","S","NIOSH-2.",2],
+["Cinacalcet","Mimpara®","Comp Rec","NO triturar (fabricante). consultar con prescriptor.","No evidencia.","S","",0],
+["Ciprofloxacino","Ciprofloxacino EFG, Baycip®","Comp Rec","Desleír 10-20 ml agua","Igual que gástrica","N_1H","Separar de NE por quelación (Ca²⁺, Mg²⁺). Separar también de antiácidos.",0],
+["Citalopram","Citalopram EFG","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Clindamicina","Dalacin®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","Preferentemente con NE.",0],
+["Clometiazol","Distraneurine®","Cap","NO (riesgo de adherencia). Contactar SF.","NO por esta vía","S","",0],
+["Clomipramina","Anafranil®","Comp (LI)","Triturar, diluir 15-20 ml agua","Usar Amp/Vial","S","Anafranil 75 mg (LM): sustituir por LI.",0],
+["Clomipramina","Anafranil®","Amp/Vial","Administrar directamente","Igual que gástrica","S","Amp de elección para vía post-pilórica.",0],
+["Clonazepam","Rivotril®","Comp","NO manipular comp. Sustituir por Rivotril® gotas.","NO manipular.","S","NIOSH-3. Guantes+mascarilla+bata.",3],
+["Clonazepam","Rivotril®","Gts Or","Diluir en 10 ml agua, administrar","Igual que gástrica","S","NIOSH-3. Doble guante.",3],
+["Clonidina","Catapresan®","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
+["Cloperastina","Flutox®","Sol Jar","Diluir en 20 ml agua","Igual que gástrica","S","",0],
+["Clopidogrel","Plavix®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",0],
+["Clorazepato dipotásico","Tranxilium®","Cap","Abrir cápsula, diluir 20 ml agua","NO (absorción principalmente gástrica)","S","Por pH ácido, absorción principalmente gástrica.",0],
+["Clorazepato dipotásico","Tranxilium®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Cloroquina","Resochin®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Clorpromazina","Largactil®","Comp","Sustituir por Largactil® Gts o Amp/Vial.","Sustituir por Amp.","N1","",0],
+["Clorpromazina","Largactil®","Gts Or","Administrar las gotas directamente","NO post-pilórica","N1","Gotas de elección para vía gástrica.",0],
+["Clorpromazina","Largactil®","Amp/Vial","Administrar directamente","Igual que gástrica","N1","Amp de elección para post-pilórica.",0],
+["Clortalidona","Higrotona®","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
+["Clotiapina","Etumina®","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
+["Cloxacilina","Orbenin®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","N_1H","",0],
+["Clozapina","Nemea® EFG","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Codeína","Codeisan®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Codeína","Codeisan®","Sol Jar","Diluir en 50 ml agua","Igual que gástrica","S","Contiene sorbitol.",0],
+["Colchicina","Colchicina EFG","Comp","Desleír 10-20 ml agua","No evidencia por esta vía","N1","NIOSH-3. Guantes+mascarilla+bata.",3],
+["Colestiramina","Efensol®","Sobre","Disolver en 150 ml agua","No evidencia por esta vía","N1","Puede obstruir la sonda. Separar del resto de medicación.",0],
+["Dabigatrán","Pradaxa®","Cap","NO (AEMPS no recomienda abrir cápsula)","NO por esta vía","S","",0],
+["Darunavir","Prezista®","Comp Rec","Triturar, diluir 15-20 ml agua","No evidencia (si necesario: diluir 30-40 ml agua)","N1","Con NE disminuye molestias GI.",0],
+["Deflazacort","Zamene®","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",2],
+["Deflazacort","Zamene®","Gts Or","Diluir en 10 ml agua","Igual que gástrica","S","De elección.",2],
+["Dexametasona","Fortecortin®","Amp/Vial","Administrar directamente","Igual que gástrica","S","De elección. Comp: sustituir por Amp.",0],
+["Dexclorfeniramina","Polaramine®","Comp","Sustituir por Sol Jar o Amp/Vial.","Sustituir por Amp.","S","",0],
+["Dexclorfeniramina","Polaramine®","Sol Jar","Administrar directamente","Igual que gástrica","S","Sol contiene sorbitol.",0],
+["Dexclorfeniramina","Polaramine®","Amp/Vial","Diluir en 20 ml agua","Igual que gástrica","S","",0],
+["Dexketoprofeno","Enantyum®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Con NE retrasa absorción pero disminuye molestias GI.",0],
+["Diazepam","Diazepam EFG","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
+["Diclofenaco","Diclofenaco EFG","Comp Ent","NO triturar (cubierta entérica). Sustituir por Amp/Vial.","NO triturar.","S","",0],
+["Diclofenaco","Diclofenaco EFG","Amp/Vial","Diluir en 10 ml agua, administrar","Igual que gástrica","S","De elección. Con NE disminuye molestias GI.",0],
+["Digoxina","Digoxina EFG","Comp","Triturar, diluir 15-20 ml agua","No de elección en post-pilórica","NF","Incompatible con NE con fibra (separar). Para SNY usar Amp.",0],
+["Digoxina","Digoxina EFG","Amp/Vial","Administrar directamente","Igual que gástrica","NF","Incompatible con NE con fibra (separar). De elección para SNY.",0],
+["Diltiazem","Diltiazem EFG","Comp (LI)","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Diltiazem","Masdil®, Uni Masdil®","Cap Lib M","Abrir, suspender microgránulos en 5-10 ml agua (no triturar)","Igual que gástrica","S","No triturar microgránulos (LM). Precaución obstrucción sonda fina.",0],
+["Diltiazem","Masdil Retard®, Dinisor Retard®","Comp Lib M","NO triturar. Sustituir por Diltiazem comp LI.","NO triturar.","S","",0],
+["Dipiridamol","Persantin®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",0],
+["Disulfiram","Antabus®","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
+["Domperidona","Domperidona EFG","Sol Jar","Administrar directamente","Igual que gástrica (de elección)","N15","Contiene sorbitol.",0],
+["Domperidona","Domperidona EFG","Cap","Abrir cápsula, diluir 20 ml agua","NO post-pilórica","N15","",0],
+["Donepezilo","Aricept® Flas","Comp Liot","Desleír 10-20 ml agua","Igual que gástrica","S","Bucodispersable si tolera. Administrar en última toma nocturna.",0],
+["Doxazosina","Doxazosina EFG","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
+["Doxazosina","Carduran® Neo","Comp Lib M","NO triturar. Sustituir por Doxazosina comp LI.","NO triturar.","S","",0],
+["Doxiciclina","Doxiciclina EFG","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","N_1H","",0],
+["Duloxetina","Cymbalta®","Cap Ent","Abrir, suspender microgránulos en 10 ml bicarbonato sódico 1M","Igual que gástrica","S","No triturar microgránulos (LM). Precaución obstrucción sonda fina.",0],
+["Efavirenz","Efavirenz EFG, Atripla®","Comp Rec","NO manipular (NIOSH-3). consultar con prescriptor.","NO manipular.","N_1H","NIOSH-3. Guantes+mascarilla+bata.",3],
+["Efedrina","Efedrina","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Enalapril","Enalapril EFG","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
+["Entacapona","Comtan®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Eplerenona","Elecor®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Eritromicina","Eritrogobens®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","N_1H","",0],
+["Escitalopram","Escitalopram EFG","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","De elección: usar gotas orales (Esertia® Gts).",0],
+["Escitalopram","Esertia®","Gts Or","Diluir en 10 ml agua, administrar inmediatamente","Igual que gástrica","S","De elección.",0],
+["Esomeprazol","Nexium® MUPS","Comp Ent","Desleír en 20-30 ml agua, administrar inmediatamente","Igual que gástrica","S","Pellets pueden obstruir sonda fina (aumentar agua). 30 min antes de NE.",0],
+["Espironolactona","Aldactone®, Aldactone-A®","Comp Rec","NO manipular la forma sólida. Usar únicamente la presentación en solución.","Igual que gástrica (FM)","S","NIOSH-2. Doble guante + protección.",2],
+["Estradiol","Progynova®","Comp Rec","Desleír 10-20 ml agua","Igual que gástrica","S","Administrar después de la NE.",2],
+["Etambutol","Myambutol®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",0],
+["Etravirina","Intelence®","Comp","Desleír 10-20 ml agua","Igual que gástrica","ND","Administrar inmediatamente después de la NE.",0],
+["Famciclovir","Famciclovir EFG","Comp Rec","Triturar, diluir 15-20 ml agua, administrar inmediatamente","Igual que gástrica","S","Proteger de la luz.",0],
+["Fenitoína","Epanutin®, Sinergina®","Cap / Comp","NO manipular cap/comp. Sustituir por EPANUTIN® suspensión oral.","NO manipular.","N2","NIOSH-2. Doble guante.",2],
+["Fenitoína","Epanutin®","Sol Jar (6 mg/ml)","Diluir en 25-30 ml agua, administrar inmediatamente","Igual que gástrica","N2","NIOSH-2. Separar NE 2h antes y 2h después. Lavar sonda 30-60 ml agua. Monitorizar niveles.",2],
+["Fenobarbital","Luminal®","Comp","Desleír en 10 ml agua templada, administrar inmediatamente","Igual que gástrica","S","Agua templada acelera absorción.",0],
+["Fenofibrato","Fenofibrato EFG","Cap","Abrir cápsula, disolver 20 ml agua","Igual que gástrica","S","",0],
+["Fenofibrato","Secalip®","Cap Lib M","NO triturar. Sustituir por cap LI ajustando posología.","NO triturar.","S","",0],
+["Fenoxibenzamina","Phenoxybenzamine®","Cap","Abrir cápsula, disolver 20 ml agua","Igual que gástrica","S","",0],
+["Fentanilo","Abstral®","Comp Sl","NO (formulado para absorción sublingual)","NO por esta vía","S","",0],
+["Ferrimanitol / Ovoalbúmina","Profer®","Sobre","Disolver en 100 ml agua, administrar inmediatamente","NO (no absorbible por yeyuno)","S","1h antes o 2h después de NE para absorción. Separar de antiácidos y tetraciclinas.",0],
+["Finasterida","Proscar®","Comp Rec","Desleír 10-20 ml agua","Igual que gástrica","S","NIOSH-3. Guantes+mascarilla+bata.",3],
+["Fitomenadiona","Konakion®","Amp/Vial","Diluir 5 ml agua, administrar","Igual que gástrica","S","Proteger de la luz.",0],
+["Flecainida","Apocard®","Comp","Desleír 10-20 ml agua","Igual que gástrica","N1","Si intolerancia GI: administrar coincidiendo con NE.",0],
+["Fluconazol","Diflucan®","Cap","NO manipular la cápsula. Usar únicamente Loitin® solución oral.","NO manipular.","S","NIOSH-3. Guantes+mascarilla+bata.",3],
+["Fluconazol","Loitin®","Sol Jar","Diluir en 20 ml agua, administrar inmediatamente","Igual que gástrica","S","NIOSH-3. Doble guante.",3],
+["Fludrocortisona","Florinef®","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
+["Flunarizina","Flurpax®","Cap","Abrir cápsula, disolver 20 ml agua","Igual que gástrica","S","",0],
+["Flunitrazepam","Rohipnol®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","N1H","",0],
+["Fluoxetina","Fluoxetina EFG","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","Administrar 1h antes de última toma nocturna.",0],
+["Fluoxetina","Fluoxetina EFG","Sol Jar","Diluir en 100 ml agua","NO post-pilórica","S","",0],
+["Flurazepam","Dormodor®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","N1","Administrar 1h antes de la toma nocturna.",0],
+["Fluvoxamina","Dumirox®","Comp Rec","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
+["Fólico, ácido","Acfol®","Comp","Desleír 10-20 ml agua, administrar inmediatamente","Igual que gástrica","S","Muy inestable: administrar inmediatamente.",0],
+["Folinato cálcico","Lederfolin®","Comp","Desleír 10-20 ml agua, administrar inmediatamente","Igual que gástrica","S","Muy inestable: administrar inmediatamente.",0],
+["Fosamprenavir","Telzir®","Comp Rec","Triturar, diluir 15-20 ml agua","Triturar, diluir 30-40 ml agua","S","",0],
+["Fosfomicina","Fosfomicina EFG","Sobre","Disolver en 20 ml agua, administrar inmediatamente","Igual que gástrica","S","Preferiblemente 1h antes o 2h después de NE.",0],
+["Fosfomicina","Fosfocina®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","",0],
+["Furosemida","Seguril®","Comp","Triturar, diluir 15-20 ml agua. Proteger de la luz.","Usar Amp/Vial","NA","Administrar 1h antes de la NE. Proteger de la luz.",0],
+["Furosemida","Seguril®","Amp/Vial","Diluir en 5 ml, administrar","Igual que gástrica","NA","De elección para SNY.",0],
+["Furosemida / Triamtereno","Salidur®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","N1","",0],
+["Gabapentina","Gabapentina EFG, Neurontin®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","",0],
+["Gemfibrozilo","Lopid®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","NA","Administrar 1h antes de la NE.",0],
+["Glimepirida","Amaryl®","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","Administrar justo antes de la NE.",0],
+["Glipizida","Minodiab®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Administrar justo antes de la NE.",0],
+["Haloperidol","Haloperidol EFG","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","N1","",0],
+["Haloperidol","Haloperidol EFG","Gts Or","Diluir en 10 ml agua, administrar inmediatamente","No de elección (pH ácido 2.5-3, riesgo precipitación)","N1","",0],
+["Hidralazina","Hydrapres®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","N1","",0],
+["Hidroclorotiazida","Esidrex®","Comp","Desleír 10 ml agua","Igual que gástrica","S","",0],
+["Hidrocortisona","Hidroaltesona®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Preferentemente con NE.",0],
+["Hidroxicarbamida","Hydrea®","Cap","NO manipular la cápsula. Usar únicamente la presentación en solución.","Igual que gástrica (FM)","S","NIOSH-1. Doble guante + protección.",1],
+["Hidroxicloroquina","Dolquine®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Hidroxizina","Atarax®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Ibuprofeno","Ibuprofeno EFG","Sol Jar","Diluir en 100 ml agua","Igual que gástrica","S","Elevada osmolaridad y viscosidad.",0],
+["Ibuprofeno","Ibuprofeno EFG","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Imipramina","Tofranil®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Separar de NE con fibra.",0],
+["Indapamida","Tertensif® Retard","Comp Lib M","NO triturar. Sustituir por indapamida comp LI.","NO triturar.","S","",0],
+["Indapamida","Indapamida EFG","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Isoniazida / Piridoxina","Cemidon®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","N1","",0],
+["Isosorbida, mononitrato","Uniket®","Comp (LI)","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Isosorbida, mononitrato","Uniket® Retard","Comp Lib M","NO triturar. Sustituir por comp LI ajustando posología.","NO triturar.","S","",0],
+["Itraconazol","Itraconazol EFG","Cap","Abrir, suspender en 20 ml agua (no triturar microgránulos)","NO (absorción principalmente gástrica)","N_1H","Inmediatamente después de la NE. No dar con antiácidos.",3],
+["Ivabradina","Procoralan®","Comp Rec","Triturar, diluir 15-20 ml agua","NO post-pilórica","S","",0],
+["Ketoconazol","Ketoconazol EFG","Comp","Triturar, diluir 15-20 ml agua","NO post-pilórica","S","No dar con antiácidos.",0],
+["Lacosamida","Vimpat®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Lactulosa","Lactulosa EFG","Sol Or","Diluir en 20 ml agua (SNG) / 100 ml agua (SNY)","Diluir en 100 ml agua","N1","Altera absorción y produce precipitados con NE.",0],
+["Lamivudina","Lamivudina EFG","Comp Rec","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
+["Lamotrigina","Lamotrigina EFG","Comp Dis","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
+["Lansoprazol","Opiren® Flas","Comp Liot","Desleír 10-20 ml agua","Igual que gástrica","N30","Sustituido por Esomeprazol. 30 min antes de NE. No triturar microgránulos.",0],
+["Lantano, carbonato","Fosrenol®","Comp Mas","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Leflunomida","Arava®","Comp Rec","Desleír 10-20 ml agua","Igual que gástrica","S","NIOSH-2. Doble guante + protección.",2],
+["Letrozol","Letrozol EFG","Comp Rec","Desleír 10-20 ml agua","Igual que gástrica","S","NIOSH-1. Doble guante + protección.",1],
+["Levetiracetam","Levetiracetam EFG, Keppra®","Sol Jar","Administrar directamente","NO post-pilórica (usar comp)","S","Sol Jar solo para vía gástrica.",0],
+["Levetiracetam","Levetiracetam EFG, Keppra®","Comp Rec","NO para vía gástrica. Para SNY: triturar, diluir 15-20 ml agua.","Triturar, diluir 15-20 ml agua","S","Comp para vía post-pilórica. Para gástrica usar Sol Jar.",0],
+["Levodopa / Benserazida","Madopar®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","N_1H","NE (proteínas) puede retrasar absorción. Mantener horario previo.",0],
+["Levodopa / Benserazida","Madopar® Retard","Cap Lib M","NO triturar. Sustituir por LI ajustando posología.","NO triturar.","N1","",0],
+["Levodopa / Carbidopa","Sinemet®, Sinemet® Plus","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","NE (proteínas) puede retrasar absorción.",0],
+["Levodopa / Carbidopa","Sinemet® Retard","Comp Lib M","NO triturar. Sustituir por LI ajustando posología.","NO triturar.","S","",0],
+["Levodopa / Carbidopa / Entacapona","Stalevo®","Comp Rec","Triturar, diluir 15-20 ml agua, administrar inmediatamente","Igual que gástrica","S","NE puede retrasar absorción.",0],
+["Levofloxacino","Levofloxacino EFG, Tavanic®","Comp Rec","Triturar (eliminar cubierta), diluir 15-20 ml agua","Igual que gástrica","N_1H","Separar de antiácidos con Mg o Al.",0],
+["Levomepromazina","Sinogan®","Comp Rec","Sustituir por Sinogan® gotas.","Sustituir por gotas.","N1","",0],
+["Levomepromazina","Sinogan®","Gts Or","Disolver en 10 ml agua, administrar","Igual que gástrica","N1","",0],
+["Levotiroxina","Eutirox®","Comp","Desleír 10-20 ml agua","Igual que gástrica","N_1H","Administrar 1h antes o 2h después de NE. Múltiples interacciones.",0],
+["Linagliptina","Trajenta®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Linezolid","Zyvoxid®","Comp Rec","Triturar, diluir 15-20 ml agua, administrar inmediatamente","Igual que gástrica","S","Biodisponibilidad oral ~100%. Candidato a step-down desde IV.",0],
+["Litio, carbonato","Plenur®","Comp Lib M","NO triturar (liberación sostenida). Contactar SF.","NO triturar.","S","",0],
+["Loperamida","Loperamida EFG","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","",0],
+["Lorazepam","Lorazepam EFG","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","Administrar antes de iniciar la NE.",0],
+["Lormetazepam","Lormetazepam EFG","Comp","Desleír 10-20 ml agua","Igual que gástrica","N1","Administrar 1h antes de la NE.",0],
+["Losartán","Losartan EFG, Cozaar®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Macrogol","Movicol®","Sobre","Disolver en 125 ml agua","Igual que gástrica","N1","",0],
+["Magnesio","Magnogene®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","ND","Administrar después de la NE.",0],
+["Magnesio","Magnesioboi® (lactato)","Comp","Desleír 10-20 ml agua","Igual que gástrica","ND","Administrar después de la NE.",0],
+["Maprotilina","Ludiomil®","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
+["Maraviroc","Celsentri®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Mebendazol","Lomper®","Comp","Sustituir por Lomper® Sol Jar.","Sustituir por Sol.","S","",0],
+["Mebendazol","Lomper®","Sol Jar","Administrar directamente","Igual que gástrica","S","De elección.",0],
+["Memantina","Axura®","Comp Rec","Triturar, diluir 15-20 ml agua, administrar inmediatamente","Igual que gástrica","S","",0],
+["Mercaptopurina","Mercaptopurina EFG","Comp","NO manipular la forma sólida. Usar únicamente la presentación en solución.","No evidencia","N1","NIOSH-1. Administrar por la noche.",1],
+["Mesalazina","Pentasa®","Sobre Gra Lib M","Suspender microgránulos en 25 ml agua (no triturar)","Igual que gástrica","S","No triturar microgránulos (entéricos). Precaución obstrucción sonda fina.",0],
+["Mesalazina","Claversal®","Comp Rec","NO triturar. Contactar SF (valorar enema rectal).","NO triturar.","S","",0],
+["Metadona","Metasedin®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Metadona","Metadona EFG","Sol Jar","Administrar directamente","Igual que gástrica","S","De elección.",0],
+["Metamizol","Metamizol EFG","Cap","Abrir cápsula, diluir 20 ml agua","Usar Amp/Vial","S","",0],
+["Metamizol","Metamizol EFG","Amp/Vial","Diluir en 20 ml agua, administrar","Igual que gástrica","S","De elección para SNY.",0],
+["Metformina","Metformina EFG","Comp Rec","Triturar (LI), diluir 15-20 ml agua. Retard: no triturar.","Igual que gástrica","S","Administrar justo antes de la NE.",0],
+["Metildopa","Aldomet®","Comp","Desleír 10-20 ml agua","Igual que gástrica","N1","",0],
+["Metilprednisolona","Urbason®","Comp","Desleír 10-20 ml agua (3 min)","Igual que gástrica","S","",0],
+["Metocarbamol","Robaxin®","Comp","Triturar, diluir 20 ml agua","Igual que gástrica","S","",0],
+["Metoclopramida","Metoclopramida EFG","Sol Jar","Diluir en 20 ml agua, administrar inmediatamente","Igual que gástrica","N1","De elección.",0],
+["Metotrexato","Metotrexato EFG","Comp","NO manipular la forma sólida. Usar únicamente la presentación en solución.","Igual que gástrica (FM)","N1","NIOSH-1. Doble guante + protección completa.",1],
+["Metronidazol","Flagyl®","Comp","Triturar, diluir 15-20 ml agua","Diluir sol en 20 ml agua","S","",0],
+["Metronidazol","Metronidazol EFG","Sol Jar","Administrar directamente","Diluir en 20 ml agua","S","De elección.",0],
+["Mianserina","Lantanon®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Micofenolato de mofetilo","Micofenolato EFG","Comp Rec","NO manipular la forma sólida. Usar únicamente la presentación en solución.","NO manipular.","N1","NIOSH-2. Contiene sorbitol (sol). Separar NE 1h.",2],
+["Micofenolato de mofetilo","Micofenolato EFG","Sol Jar","Diluir en 50 ml agua, administrar inmediatamente","Igual que gástrica","N1","NIOSH-2. Contiene sorbitol.",2],
+["Midazolam","Dormicum®","Amp/Vial","Diluir en 5 ml, administrar","Igual que gástrica","N1","Administrar 1h antes de última toma nocturna.",0],
+["Midazolam","Midazolam EFG","Sol Jar","Administrar directamente","Igual que gástrica","N1","",0],
+["Mirtazapina","Mirtazapina® Flas","Comp Liot","Desleír 10-20 ml agua","Igual que gástrica","S","Bucodispersable si tolera.",0],
+["Molsidomina","Molsidain®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Montelukast","Montelukast EFG","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Morfina","MST®","Comp Lib M","NO triturar. Sustituir por LI ajustando posología.","NO triturar.","S","",0],
+["Morfina","Sevredol®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Morfina","Oramorph®","Sol Jar","Diluir en 10 ml agua, administrar inmediatamente","Igual que gástrica","S","",0],
+["Moxifloxacino","Actira®","Comp Rec","Desleír 10-20 ml agua","Igual que gástrica","N1H","",0],
+["Naltrexona","Revia®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Nebivolol","Lobivon®","Comp","Desleír 10-20 ml agua (4 min)","Igual que gástrica","S","",0],
+["Nevirapina","Nevirapina EFG, Viramune®","Comp","NO manipular la forma sólida. Usar únicamente la presentación en solución.","NO manipular.","S","NIOSH-2.",2],
+["Nevirapina","Viramune®","Sol Jar","Diluir en 20 ml agua, administrar inmediatamente","Igual que gástrica","S","NIOSH-2. Doble guante.",2],
+["Nimodipino","Nimodipino EFG","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","N1H","",0],
+["Nitrofurantoína","Furantoina®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","N1H","",0],
+["Olanzapina","Olanzapina Flas EFG","Comp Liot","Desleír 10-20 ml agua. De elección.","Igual que gástrica","S","",0],
+["Olanzapina","Olanzapina EFG","Comp Rec","Sustituir por Olanzapina Flas (Comp Liot).","Sustituir por Flas.","S","",0],
+
+["Ondansetrón","Ondansetrón EFG","Comp Rec","Desleír en 10-20 ml agua, administrar inmediatamente","Usar Amp/Vial","S","",0],
+["Ondansetrón","Ondansetrón EFG","Amp/Vial","Diluir en 5 ml zumo de manzana (gástrica). Para SNY: en 5 ml agua.","Diluir en 5 ml agua, administrar","S","Zumo manzana: la mezcla es estable en medio ácido.",0],
+["Oseltamivir","Oseltamivir EFG","Sol","Administrar directamente. De elección.","Igual que gástrica","S","Reconstituir según instrucciones de Farmacia.",0],
+["Otilonio bromuro","Spasmoctyl®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","N30","Administrar 30 min antes de NE.",0],
+["Oxcarbazepina","Oxcarbazepina EFG","Comp Rec","NO manipular la forma sólida. Usar únicamente la presentación en solución.","NO manipular.","S","NIOSH-2.",2],
+["Oxcarbazepina","Oxcarbazepina EFG","Sol Jar","Diluir en 20 ml agua, administrar inmediatamente","Igual que gástrica","S","NIOSH-2. Doble guante.",2],
+["Oxibutinina","Ditropan®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Oxicodona / Naloxona","Targin®","Comp Lib M","NO triturar. Contactar SF.","NO por esta vía","S","",0],
+["Paracetamol","Apiretal®","Gts Or","Diluir en 30 ml agua. De elección.","Igual que gástrica","S","",0],
+["Paracetamol","Dolocatil®","Sobre","Diluir en 20 ml agua, administrar inmediatamente","Igual que gástrica","S","",0],
+["Paracetamol","Paracetamol EFG","Comp","Sustituir por Apiretal® Gts o Dolocatil® Sobre.","Sustituir.","S","",0],
+["Parafina líquida","Emuliquen® Simple","Sobre","Diluir en 30 ml agua","Igual que gástrica","ND","Administrar 2h antes o 2h después de NE.",0],
+["Paromomicina","Humatin®","Sol Jar","Diluir en 20 ml agua","Igual que gástrica","S","",0],
+["Paroxetina","Paroxetina EFG","Comp Rec","NO manipular comp. Sustituir por Daparox® Gts.","NO manipular.","S","NIOSH-3. Guantes+mascarilla+bata.",3],
+["Paroxetina","Daparox®","Gts Or","Diluir en 100 ml agua","No evidencia por esta vía","S","NIOSH-3. Doble guante.",3],
+["Pioglitazona","Actos®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Pirazinamida","Pirazinamida EFG","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",0],
+["Piridostigmina","Mestinon®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",0],
+["Piridoxina","Benadon®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Se oxida rápidamente: administrar inmediatamente.",0],
+["Pirimetamina","Daraprim®","Comp","Triturar, diluir 15-20 ml agua, administrar inmediatamente","Igual que gástrica","S","",0],
+["Poliestirensulfonato cálcico","Resincalcio®","Sobre","Diluir en 100 ml agua","Igual que gástrica","N1","Puede obstruir la sonda.",0],
+["Potasio, cloruro","Potasion®","Cap","Abrir cápsula, diluir 20 ml agua","Usar Sol Jar","N1","Riesgo coagulación NE.",0],
+["Potasio, glucoheptonato","Potasion®","Sol Jar","Diluir en 20 ml agua. De elección.","Igual que gástrica","N1","Administrar en último lugar (alta viscosidad). Riesgo coagulación NE.",0],
+["Pramipexol","Mirapexin®","Comp (LI)","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Pramipexol","Mirapexin®","Comp Lib M","NO triturar. Sustituir por LI ajustando posología.","NO triturar.","S","",0],
+["Prasugrel","Efient®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Pravastatina","Pravastatina EFG","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Administrar en última toma de la NE.",0],
+["Prednisolona","Estilsona®","Gts Or","Administrar directamente","Igual que gástrica","S","",0],
+["Prednisona","Prednisona EFG, Dacortin®","Comp","Triturar, diluir 15-20 ml agua, administrar inmediatamente","Igual que gástrica","S","Valorar sustituir por Estilsona® Gts.",0],
+["Pregabalina","Lyrica®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","",0],
+["Primidona","Mysoline®","Comp","Desleír 10-20 ml agua","No estudiada por esta vía","N_1H","",0],
+["Propafenona","Rytmonorm®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Propranolol","Sumial®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Quetiapina","Seroquel® XR","Comp Lib M","NO triturar. Sustituir por Quetiapina comp LI.","NO triturar.","S","",0],
+["Quetiapina","Quetiapina EFG","Comp (LI)","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Quinina sulfato","Quinina Sulfato","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","",0],
+["Raltegravir","Isentress®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Ramipril","Ramipril EFG","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Ranitidina","Ranitidina EFG","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Puede emplearse Amp/Vial, ajustando posología.",0],
+["Reboxetina","Norebox®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Repaglinida","Repaglinida EFG","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Administrar 15 min antes de la NE.",0],
+["Ribavirina","Ribavirina EFG","Comp","NO manipular la forma sólida. Usar únicamente la presentación en solución.","NO manipular.","S","NIOSH-3. Guantes+mascarilla+bata.",3],
+["Ribavirina","Ribavirina EFG","Sol Jar","Diluir en 20 ml agua, administrar","Igual que gástrica","S","NIOSH-3. Doble guante.",3],
+["Rifabutina","Ansatipin®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","",0],
+["Rifampicina","Rifaldin®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","N_1H","Proteger de la luz. Preparar en el momento.",0],
+["Rifampicina","Rifaldin®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","N_1H","Proteger de la luz.",0],
+["Rifampicina / Isoniazida","Rifinah®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","N_1H","",0],
+["Rifampicina / Isoniazida / Pirazinamida","Rifater®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","N_1H","",0],
+["Riluzol","Rilutex®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","N1H","",0],
+["Risperidona","Risperdal®","Comp Liot","Desleír en 10 ml agua, administrar inmediatamente","Igual que gástrica","S","NIOSH-2. Bucodispersable si tolera.",2],
+["Risperidona","Risperdal®","Sol Jar","Diluir en 10 ml agua, administrar inmediatamente","Igual que gástrica","S","NIOSH-2. Doble guante.",2],
+["Ritonavir","Norvir®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Rivaroxabán","Xarelto®","Comp Rec","Triturar, diluir 15-20 ml agua","NO post-pilórica","S","Preferentemente con NE.",0],
+["Rivastigmina","Exelon®","Cap","NO abrir cápsula. Sustituir por Exelon® Sol Jar.","Cambiar a parche transdérmico (SNY)","S","",0],
+["Rivastigmina","Exelon®","Sol Jar","Diluir en 20 ml agua","Igual que gástrica","S","Para SNY: parche transdérmico.",0],
+["Ropinirol","Requip®","Comp Rec (LI)","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",0],
+["Ropinirol","Requip-Prolip®","Comp Lib M","NO triturar. Sustituir por LI ajustando posología.","NO triturar.","S","",0],
+["Salbutamol","Ventolin®","Comp","Triturar, diluir 15-20 ml agua","NO (no estudiada)","S","Valorar sustitución de vía.",0],
+["Saquinavir","Invirase®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","",0],
+["Selegilina","Plurimen®","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","Por la mañana con NE.",0],
+["Sertralina","Sertralina EFG","Comp Rec","Desleír 10-20 ml agua","No estudiada (valorar Besitran® sol)","S","",0],
+["Sevelamer","Renvela®","Polvo","Disolver en 30 ml agua, administrar inmediatamente","Igual que gástrica","S","",0],
+["Sevelamer","Renagel®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Sildenafilo","Revatio®","Comp Rec","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
+["Silodosina","Silodyx®","Cap","Abrir cápsula, diluir 20 ml agua","NO post-pilórica","S","La solución no es uniforme.",0],
+["Simeprevir","Olysio®","Cap","Abrir cápsula, diluir 20 ml agua, administrar inmediatamente","NO post-pilórica","ND","Inmediatamente después de la NE.",0],
+["Simeticona","Aero Red®","Comp Mas","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Simvastatina","Simvastatina EFG","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Última toma nocturna de NE.",0],
+["Solifenacina","Vesicare®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Precaución: toxicidad ocular manipuladores. Triturar en bolsa hermética.",0],
+["Sotalol","Sotapor®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Sucralfato","Sucralfato EFG","Sol Jar","Diluir en 20 ml agua","NO post-pilórica","N1","Posible formación de bezoares.",0],
+["Sulfadiazina","Sulfadiazina Reig Jofré","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Proteger de la luz. Riesgo cristaluria: administrar abundantes líquidos.",0],
+["Sulfametoxazol / Trimetoprima","Septrin®, Septrin Forte®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",0],
+["Sulfasalazina","Salazopyrina®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Riesgo cristaluria: administrar abundantes líquidos.",0],
+["Sulpirida","Dogmatil®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","N1","",0],
+["Sulpirida","Dogmatil®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","N1","",0],
+["Sumatriptán","Imigran Neo®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Tacrolimus","Prograf®","Cap","NO manipular. Sustituir por Modigraf® granulado sol.","NO manipular.","N_1H","NIOSH-2. No usar sondas de PVC.",2],
+["Tacrolimus","Modigraf®","Sol Jar","Diluir en 10 ml agua, administrar inmediatamente","Igual que gástrica","N_1H","NIOSH-2. No usar sondas de PVC.",2],
+["Tamsulosina","Urolosin® OCAS","Comp Lib M","NO triturar. Sustituir por Doxazosina LI.","NO triturar.","S","",0],
+["Tenofovir","Viread®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Tenofovir / Emtricitabina","Truvada®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Con NE aumenta absorción.",0],
+["Teofilina","Theo-Dur®","Comp Lib M","NO triturar. Sustituir por Eufilina® Amp/Vial.","NO triturar.","N1","",0],
+["Teofilina","Eufilina®","Amp/Vial","Administrar directamente","Diluir en 20 ml agua","N1","De elección.",0],
+["Tiamazol","Tirodril®","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","NIOSH-3. Guantes+mascarilla+bata.",3],
+["Tiamina","Benerva®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Tiamina","Benerva®","Amp/Vial","Diluir en 20 ml agua, administrar inmediatamente","Igual que gástrica","S","Pueden emplearse las ampollas.",0],
+["Tiaprida","Tiaprizal®","Comp","Sustituir por Tiaprizal® Amp o Gts Or.","Sustituir.","S","",0],
+["Tiaprida","Tiaprizal®","Amp/Vial","Diluir en 20 ml agua, administrar inmediatamente","Igual que gástrica","S","De elección.",0],
+["Tiaprida","Triaprizal®","Gts Or","Administrar directamente","Igual que gástrica","S","",0],
+["Ticagrelor","Brilique®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Ticlopidina","Ticlopidina EFG","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Tizanidina","Sirdalud®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Tolterodina","Detrusitol®","Comp Rec (LI)","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",0],
+["Tolterodina","Detrusitol® Neo","Cap Lib M","NO triturar. Sustituir por Detrusitol® LI.","NO triturar.","S","",0],
+["Tolvaptán","Samsca®","Comp","Triturar, diluir 15-20 ml agua","NO post-pilórica","S","Por la mañana con NE.",0],
+["Topiramato","Topamax®","Cap","NO manipular las cápsulas. Usar únicamente el comp rec (desleír en agua).","NO manipular.","S","NIOSH-3. Guantes+mascarilla+bata.",3],
+["Topiramato","Topamax®","Comp Rec","Desleír 10-20 ml agua","Igual que gástrica","S","NIOSH-3. Doble guante.",3],
+["Torasemida","Torasemida EFG","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Tramadol","Tramadol EFG, Adolonta®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","LM: no triturar.",0],
+["Tranexámico, ácido","Amchafibrin®","Amp/Vial","Administrar directamente","Diluir en 20 ml agua","S","De elección.",0],
+["Trazodona","Deprax®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",0],
+["Triflusal","Disgren®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",0],
+["Ursodesoxicólico, ácido","Ursochol®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Proteger de la luz.",0],
+["Ursodesoxicólico, ácido","Ursochol®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","Proteger de la luz.",0],
+["Valganciclovir","Valcyte®","Comp Rec","NO manipular comp. Sustituir por Valcyte® Sol Jar.","NO manipular.","ND","NIOSH-2.",2],
+["Valganciclovir","Valcyte®","Sol Jar","Diluir en 10 ml agua, administrar inmediatamente","Igual que gástrica","ND","NIOSH-2. Contiene sodio. Inmediatamente después de NE.",2],
+["Valproico, ácido","Depakine Crono®, Depakine®","Comp / Comp Lib M","NO manipular comp/retard. Usar DEPAKINE® Sol Jar.","NO manipular.","S","NIOSH-3. Guantes+mascarilla+bata.",3],
+["Valproico, ácido","Depakine®","Sol Jar","Diluir en 20 ml agua (SNG) / 80 ml agua (SNY)","Diluir en 80 ml agua","S","NIOSH-3. Elevada osmolaridad. Doble guante.",3],
+["Valsartán","Diovan®, Valsartan EFG","Comp Rec","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
+["Valsartán","Valsartan EFG","Comp Liot","Desleír 10-20 ml agua (bucodispersable si tolera)","Igual que gástrica","S","",0],
+["Vancomicina","Vancomicina EFG","Sol Jar","Diluir en 30 ml agua, administrar inmediatamente","Igual que gástrica","S","Para uso enteral en CDiff/enterocolitis estafilocócica.",0],
+["Venlafaxina","Vandral® Retard, Venlafaxina Retard EFG","Cap Lib M","NO triturar. Sustituir por comp LI ajustando posología.","NO triturar.","S","",0],
+["Venlafaxina","Venlafaxina EFG","Comp (LI)","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Verapamilo","Manidon® Retard","Comp Lib M","NO triturar. Sustituir por Manidon® comp LI.","NO triturar.","S","",0],
+["Verapamilo","Manidon®","Comp (LI)","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","Asegurar su disolución (recubierto pelicular).",0],
+["Vildagliptina","Xiliarx®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Vitaminas y minerales complejo","Redoxon® Complex","Comp Efv","Disolver en 20 ml agua, esperar efervescencia completa","Igual que gástrica","S","Por la mañana con NE.",0],
+["Vitaminas B y C","Becozyme-C Forte®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Voriconazol","Vfend®","Sol Jar","Diluir en 20 ml agua, administrar","Igual que gástrica","N_1H","NIOSH-3. Guantes+mascarilla+bata.",3],
+["Voriconazol","Vfend®","Comp Rec","NO (usar suspensión 40 mg/ml). consultar con prescriptor.","NO por esta vía.","N1H","NIOSH-3.",3],
+["Warfarina","Aldocumar®","Comp","Triturar, diluir 15-20 ml agua","Igual que gástrica","N1","NIOSH-3. Guantes+mascarilla+bata. Triturar en bolsa hermética. Controlar INR frecuentemente.",3],
+["Zolpidem","Zolpiden EFG","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","Administrar en última toma de la NE.",0],
+["Zuclopentixol","Clopixol®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
+["Acarbosa","Glucobay®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","N1","Administrar 1h antes de la NE.",0],
+["Aceclofenaco","Airtal®, Alacen®","Comp Rec","Pulverizar, dispersar en 20 ml agua","Igual que gástrica","S","Administrar con NE para disminuir molestias GI.",0],
+["Aceclofenaco","Airtal®","Sobre","Disolver en 50 ml agua, administrar inmediatamente","Igual que gástrica","S","Administrar con NE.",0],
+["Acamprosato","Zulex®, Campral®","Comp Rec","NO (cubierta entérica). Valorar cambio a Disulfiram.","NO por esta vía","S","",0],
+["Ambroxol","Ambroxol EFG","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Ambroxol","Ambroxol EFG","Sol / Jarabe","Administrar directamente o diluir en agua","Igual que gástrica","S","",0],
+["Ambroxol","Ambroxol EFG","Cap Lib Pro","NO triturar. Sustituir por comp LI o solución.","NO triturar.","S","",0],
+["Atomoxetina","Strattera®","Cap","Abrir cápsula, diluir en agua","Igual que gástrica","S","",0],
+["Barnidipino","Vasexten®","Cap Lib Pro","NO (liberación prolongada). Sustituir por amlodipino.","NO por esta vía","S","",0],
+["Bezafibrato","Difatol®","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","N1","",0],
+["Bisacodilo","Dulcolaxo®","Comp Rec","NO (cubierta entérica). Usar supositorios.","NO por esta vía","S","",0],
+["Candesartán","Atacand®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Carbamazepina","Carbamazepina EFG, Tegretol®","Sol (FM)","Diluir en 10-20 ml agua, administrar inmediatamente","Igual que gástrica","N_1H","",2],
+["Carnitina","Carnicor®","Sol / Viales","Administrar directamente o diluir en agua","Igual que gástrica","S","",0],
+["Cefalexina","Cefalexina EFG","Cap","Abrir cápsula, diluir en 20 ml agua","Igual que gástrica","S","",0],
+["Celiprolol","Cardem®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","N1H","",0],
+["Cinitaprida","Blaston®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","N1","",0],
+["Cinitaprida","Blaston®","Sobre","Disolver en agua","Igual que gástrica","N1","",0],
+["Clodronato disódico","Bonefos®","Cap","Abrir cápsula, diluir en agua","Igual que gástrica","N1","",0],
+["Clorambucilo","Leukeran®","Comp Rec","NO manipular la forma sólida.","NO manipular.","S","MP Riesgo 1.",1],
+["Colestipol","Colestid®","Sobres","Disolver en 150 ml agua","Igual que gástrica","N1","Puede obstruir la sonda.",0],
+["Dexibuprofeno","Seractil®","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",0],
+["Dextrometorfano","Romilar®","Gts","Diluir en agua y administrar inmediatamente","Igual que gástrica","S","",0],
+["Donepezilo","Aricept®","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","Preferiblemente última toma nocturna de NE.",0],
+["Ebastina","Ebastel®","Comp Rec","NO triturar (sin datos). Valorar cetirizina.","NO triturar.","S","",0],
+["Escitalopram","Cipralex®","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Etoricoxib","Arcoxia®","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",0],
+["Flucitosina","Ancotil®","Comp","Pulverizar, dispersar en agua","Igual que gástrica","S","",0],
+["Glucosamina","Droglican®","Sobres","Disolver en agua","Igual que gástrica","S","",0],
+["Halazepam","Alapryl®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Irbesartán","Aprovel®","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Isotretinoína","Acnemin®","Cap","NO manipular (teratógeno). MP Riesgo 3.","NO manipular.","S","MP Riesgo 3. Guantes+mascarilla+bata.",3],
+["Láctico, ácido / Vitamina C","Redoxon®","Comp Efv","Disolver en 20 ml agua, esperar efervescencia","Igual que gástrica","S","",0],
+["Manidipino","Artedil®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Meloxicam","Movalis®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",0],
+["Midodrina","Gutron®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Naproxeno","Naprosyn®","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","Con NE disminuye molestias GI.",0],
+["Nitrendipino","Baypress®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Norfloxacino","Noroxin®","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","N_1H","Separar de NE por quelación.",0],
+["Omeprazol","Omeprazol EFG","Cap (pellets)","Sustituir por Fórmula Magistral líquida. Si no disponible: abrir cápsula, dispersar pellets en 10 ml agua (NO triturar pellets).","Igual que gástrica","N30","Administrar 30 min antes de la NE.",0],
+["Oxazepam","Adumbran®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Prazicuantel","Biltricide®","Comp","Pulverizar, dispersar en agua","Igual que gástrica","S","",0],
+["Probenecid","Benemid®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Procainamida","Biocoryl®","Cap","Abrir cápsula, diluir en agua","Igual que gástrica","S","",0],
+["Quinapril","Acuprel®","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Quinidina","Cardioquine®","Comp Rec","NO triturar (sin datos de estabilidad)","NO triturar.","S","",0],
+["Rabeprazol","Pariet®","Comp Rec","NO triturar (cubierta entérica). Sustituir por Esomeprazol.","NO triturar.","S","",0],
+["Risedrónico, ácido","Actonel®","Comp Rec","NO (sin datos suficientes). Valorar pamidronato IV.","NO por esta vía.","S","",0],
+["Salbutamol","Ventolin®","Sol","Agitar, diluir 30-60 ml agua. SNY: 100 ml.","Diluir en 100 ml agua","S","Atemperar antes de administrar.",0],
+["Sertralina","Besitran®","Gts","Diluir en 100 ml agua","Igual que gástrica","S","De elección sobre comprimidos.",0],
+["Sulodexina","Vessel Due F®","Cap","Abrir cápsula, diluir en agua","Igual que gástrica","S","",0],
+["Tadalafilo","Adcirca®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Tiaprida","Tiaprizal®","Sol Jar","Administrar directamente","Igual que gástrica","S","De elección.",0],
+["Tipranavir","Aptivus®","Cap","Abrir cápsula, contenido en aceite - riesgo obstrucción. Diluir bien.","Igual que gástrica","S","",0],
+["Trihexifenidilo","Artane®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Zafirlukast","Accolate®","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","N1H","",0],
+["Zidovudina","Retrovir®","Sol Jar","Diluir en agua y administrar inmediatamente","Igual que gástrica","S","NIOSH-2. De elección sobre cápsulas.",2],
+["Zidovudina","Retrovir®","Cap","NO manipular. Usar Sol Jar.","NO manipular.","S","MP Riesgo 2.",2],
+["Alfuzosina","Benestan®","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Alfuzosina","Xatral® OD","Comp Lib Pro","NO triturar. Sustituir por alfuzosina comp rec.","NO triturar.","S","",0],
+["Alimemazina","Alimemazina EFG","Gts","Administrar directamente","Igual que gástrica","S","",0],
+["Aliskiren","Rasilez®","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Almitrina","Almitrina EFG","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Ambrisentan","Volibris®","Comp Rec","NO manipular (MP Riesgo 3). Pulverizar en bolsa hermética.","Igual que gástrica","S","MP Riesgo 3. Guantes+mascarilla+bata.",3],
+["Ambroxol","Ambroxol EFG","Sobre / Jarabe","Diluir en agua y administrar inmediatamente","Igual que gástrica","S","",0],
+["Aprepitant","Emend®","Cap","Abrir cápsula, diluir en agua","Igual que gástrica","S","",0],
+["Ácido ascórbico","Vitamina C EFG","Comp Efv","Disolver en agua, esperar efervescencia completa","Igual que gástrica","S","",0],
+["Ácido ascórbico","Vitamina C EFG","Gotas / Sobres","Diluir en agua y administrar","Igual que gástrica","S","",0],
+["Ácido acetohidroxámico","Lithostat®","Cap","Abrir cápsula, diluir en agua","Igual que gástrica","S","",0],
+["Ácido alendrónico","Fosamax®","Comp Rec","NO (sin estudios suficientes). Valorar parenteral.","NO por esta vía.","S","",0],
+["Ácido risedrónico","Actonel®","Comp Rec","NO (sin datos). Valorar parenteral.","NO por esta vía.","S","",0],
+["Ácido zoledrónico","Zometa®","IV","Usar vía IV directamente. No aplica vía oral/sonda.","Usar vía IV.","S","",0],
+["Acetilespiramicina","Roviramicina®","Cap","Abrir cápsula, diluir en agua","Igual que gástrica","S","",0],
+
+["Acitretina","Neotigason®","Cap","Abrir cápsula, diluir en agua","Igual que gástrica","S","MP Riesgo 3. Teratógeno. Guantes+mascarilla+bata.",3],
+["Adefovir","Hepsera®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Almagato","Almax®","Comp Mas","Pulverizar, dispersar en 10 ml agua","NO post-pilórica","N1","",0],
+["Ampicilina","Amplictil®","Cap","Abrir cápsula, diluir en 20 ml agua","Igual que gástrica","S","",0],
+["Ampicilina","Amplictil®","Suspensión","Diluir en agua y administrar inmediatamente","Igual que gástrica","S","",0],
+["Atovacuona","Wellvone®","Suspensión","Administrar directamente o diluir mínimamente","Igual que gástrica","S","Viscosidad alta: diluir con agua. De elección sobre comprimidos.",0],
+["Benazepril","Cibacen®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Bexaroteno","Targretin®","Cap","NO manipular (MP Riesgo 1). Cápsula blanda.","NO manipular.","S","MP Riesgo 1.",1],
+["Bismuto, subcitrato","Pylera®","Comp Rec","NO triturar (cubierta entérica). Valorar alternativa.","NO triturar.","S","",0],
+["Bromhexina","Bisolvon®","Gts","Diluir en agua y administrar","Igual que gástrica","S","",0],
+["Budesonida","Entocord®","Suspensión","Agitar, diluir 30 ml agua. SNY: 100 ml.","Diluir en 100 ml agua","S","",0],
+["Calcio, carbonato","Caosina®","Sobre","Disolver en agua, administrar inmediatamente","Igual que gástrica","ND","Separar 2h después de NE.",0],
+["Candesartán / Hidroclorotiazida","Atacand Plus®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Captopril / Hidroclorotiazida","Captopril/HCTZ EFG","Comp","Desleír en 10-20 ml agua","Igual que gástrica","N1","La NE reduce absorción del captopril.",0],
+["Carbimazol","Neo-Mercazole®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Cefaclor","Ceclor®","Cap","Abrir cápsula, diluir en 20 ml agua","Igual que gástrica","S","",0],
+["Cefaclor","Ceclor®","Suspensión","Diluir en agua y administrar","Igual que gástrica","S","De elección.",0],
+["Cefaclor","Ceclor® Retard","Comp Lib Pro","NO triturar. Sustituir por cap o suspensión LI.","NO triturar.","S","",0],
+["Cefadroxilo","Cefadroxilo EFG","Cap","Abrir cápsula, diluir en 20 ml agua","Igual que gástrica","S","",0],
+["Cefpodoxima","Orelox®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Ceftibuteno","Cedax®","Cap","Abrir cápsula, diluir en 20 ml agua","Igual que gástrica","S","",0],
+["Ciproterona","Androcur®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","MP Riesgo 3. Guantes+mascarilla+bata.",3],
+["Claritromicina","Klacid®","Comp Rec","Pulverizar, dispersar en 10 ml agua. De elección: suspensión.","Igual que gástrica","S","Laboratorio sin estudios pero posible según guías.",0],
+["Claritromicina","Klacid®","Suspensión","Diluir en agua y administrar inmediatamente","Igual que gástrica","S","De elección. Posible obstrucción sonda fina.",0],
+["Claritromicina","Klacid® LP","Comp Lib Pro","NO triturar. Sustituir por suspensión.","NO triturar.","S","",0],
+["Colecalciferol","Vitamina D3 EFG","Sol Or","Administrar directamente","Igual que gástrica","S","",0],
+["Dexametasona","Fortecortin®","Comp","Pulverizar, dispersar en 20 ml agua","Igual que gástrica","S","De elección: Amp/Vial.",0],
+["Dextrometorfano","Romilar®","Sol / Gts","Diluir en agua y administrar inmediatamente","Igual que gástrica","S","",0],
+["Galantamina","Reminyl®","Cap Lib Pro","NO triturar. Sustituir por galantamina solución.","NO triturar.","S","",0],
+["Galantamina","Reminyl®","Sol","Diluir en agua y administrar. De elección.","Igual que gástrica","S","",0],
+["Granisetrón","Kytril®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Haloperidol","Haloperidol EFG","Amp/Vial","Diluir en 5 ml agua. De elección en SNY.","Igual que gástrica","N1","De elección en SNY/YEG.",0],
+["Indometacina","Inacid®","Cap","Abrir, dispersar en 20 ml agua","Igual que gástrica","N1","Fotosensible.",0],
+["Itraconazol","Canadiol®","Sol Or","Diluir en agua y administrar inmediatamente","Igual que gástrica","N_1H","De elección sobre cápsulas.",3],
+["Ketorolaco","Droal®","Comp","Pulverizar, dispersar en 10 ml agua. Administrar inmediatamente.","Igual que gástrica","S","Fotosensible.",0],
+["Labetalol","Trandate®","Comp","Pulverizar, dispersar en 10 ml agua. Administrar inmediatamente.","Igual que gástrica","N1","Fotosensible.",0],
+["Labetalol","Trandate®","Amp/Vial","Administrar directamente","Igual que gástrica","N1","Fotosensible. De elección para SNY.",0],
+["Loratadina","Clarytyne®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","N30","Administrar 30 min antes de la NE.",0],
+["Neomicina","Neomicina EFG","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","N15","Administrar 15-20 min antes de la NE.",0],
+["Nistatina","Mycostatin®","Suspensión","Diluir en 20 ml agua, administrar inmediatamente","Igual que gástrica","S","",0],
+["Noretisterona","Primolut Nor®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Nortriptilina","Norfenazin®","Comp","Técnica de dispersión en agua","Igual que gástrica","S","",0],
+["Noscapina","Tuscalman®","Jarabe","Diluir en 50 ml agua, administrar inmediatamente","Igual que gástrica","S","",0],
+["Ofloxacino","Oflovir®","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","N_1H","Separar de NE (quelación). Quinolona. Separar de NE por quelación.",0],
+["Paracetamol / Codeína","Paracetamol/Codeína EFG","Comp","Pulverizar, dispersar en 20 ml agua","Igual que gástrica","S","",0],
+["Penicilamina","Penicilamina EFG","Cap","Abrir cápsula, disgregar y administrar inmediatamente","Igual que gástrica","N_1H","",0],
+["Pentoxifilina","Hemovas®","Amp","Diluir en agua y administrar directamente. De elección.","Igual que gástrica","S","De elección. Comp/comp retard: NO.",0],
+["Piridoxina / Doxilamina","Cariban®","Cap","Abrir cápsula, diluir en agua","Igual que gástrica","S","",0],
+["Posaconazol","Noxafil®","Comp Gastrorresistente","NO triturar (gastrorresistente). Usar suspensión.","NO triturar.","ND","",3],
+["Protovit®","Polivitamínico","Gts","Disolver en agua y administrar inmediatamente","Igual que gástrica","S","",0],
+["Sitagliptina","Januvia®","Comp","NO (sin estudios de administración por esta vía)","NO por esta vía.","S","Valorar sustitución.",0],
+["Telmisartán","Micardis®","Comp","Pulverizar, dispersar en 20 ml agua","Igual que gástrica","S","",0],
+["Ácido pipemídico","Pipram®","Cap","Abrir cápsula y administrar","Igual que gástrica","S","",0],
+["Perfenazina","Perfenazina EFG","Comp","Dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Acetilespiramicina","Rovamicina®","Cap","Abrir cápsula, diluir en agua","Igual que gástrica","S","",0],
+["Verapamilo / Trandolapril","Tarka®","Cap Lib M","NO triturar. Sustituir por componentes separados LI.","NO triturar.","S","",0],
+["Cinarizina","Stugeron®","Gts","Disolver en agua y administrar inmediatamente. De elección.","Igual que gástrica","S","",0],
+["Cinarizina","Stugeron®","Cap","NO (sin datos por esta vía). Usar gotas.","NO por esta vía.","S","",0],
+["Cilostazol","Ekistol®, Pletal®","Comp","NO por esta vía.","NO por esta vía.","S","",0],
+["Cilazapril","Inhibare®","Comp","NO (lab fabricante no recomienda por sonda).","NO por esta vía.","S","",0],
+["Cimetidina","Tagamet®","Comp Rec","NO. Valorar cambio a ranitidina.","NO por esta vía.","S","",0],
+["Fosfatos","FM Solución","Sol","Administrar directamente","Igual que gástrica","N1","",0],
+["Fosfestrol","Honvan®","Comp","Pulverizar, dispersar en 15 ml agua","Igual que gástrica","S","MP Riesgo 1. Pulverizar en bolsa hermética.",1],
+["Fosamprenavir","Telzir®","Suspensión","Diluir en 20 ml agua. De elección sobre comp.","Igual que gástrica","S","",0],
+["Fosinopril","Fositens®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Fosfomicina","Solufos®, Fosfocina®","Suspensión","Diluir en agua y administrar inmediatamente. De elección.","Igual que gástrica","S","",0],
+["Medroxiprogesterona","Farlutal®","Comp","Técnica de dispersión en agua","Igual que gástrica","S","",0],
+["Mefloquina","Lariam®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","Administrar con la NE.",0],
+["Mebeverina","Duspatalin®","Grageas","NO por esta vía.","NO por esta vía.","S","",0],
+["Medazepam / Amitriptilina","Nobritol®","Cap","Abrir, dispersar en 20 ml agua","Igual que gástrica","S","",0],
+["Mefenamico, ácido","Coslan®","Cap","NO (lab fabricante no recomienda por sonda).","NO por esta vía.","S","",0],
+["Amlodipino / Valsartán","Exforge®","Comp Rec","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Atenolol","Tenormin®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","Aunque compatible con NE, separarla 30 min para aumentar biodisponibilidad.",0],
+["Atovacuona / Proguanil","Malarone®","Comp","NO (sin estudios por vía sonda).","NO por esta vía.","S","",0],
+["Carbimazol","Neomercazole®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Cinarizina","Stugeron®","Comp","NO (sin datos). Cambiar a gotas.","NO por esta vía.","S","",0],
+["Fosinopril","Fositens®, Hiperlex®","Comp","Pulverizar, dispersar en 10 ml agua","Igual que gástrica","S","",0]
+
+["Tacrolimus","Advagraf®","Cap Lib Pro","NO (liberación prolongada). Usar Modigraf® solución.","NO por esta vía.","N2","NIOSH-2. Doble guante. No usar sondas de PVC.",2],
+["Micofenolato de mofetilo","Micofenolato EFG, CellCept®","Cap","NO manipular. Usar únicamente la presentación en solución.","NO manipular.","N2","NIOSH-2. Doble guante + protección. Separar NE 1h antes y 2h después.",2],
+
+];
+
+// ══════════════════════════════════════════════════════
+// APP LOGIC
+// ══════════════════════════════════════════════════════
+let via='G', sel=null, ddIdx=-1;
+const NE_TXT = {S:"Compatible con la NE",N1:"Parar NE 30 min antes y 30 min después",N2:"Parar NE 2h antes y 2h después",N_1H:"Parar NE 1h antes y 2h después",ND:"Administrar inmediatamente después de la NE",NA:"Administrar antes de iniciar la NE",N30:"Administrar 30 min antes de la NE",N15:"Administrar 15 min antes de la NE",NF:"Compatible (separar si NE con fibra)",NC:"Parar NE 30 min antes y 30 min después",NV:"Administrar coincidiendo con la NE."};
+
+function nm(s){return(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 /]/g,'');}
+
+function search(q){
+  const qn=nm(q);if(!qn)return[];
+  return DB.filter(d=>nm(d[0]).includes(qn)||nm(d[1]).includes(qn));
+}
+
+// Agrupar resultados por principio activo
+function groupResults(hits){
+  const map=new Map();
+  hits.forEach(d=>{
+    const k=d[0];
+    if(!map.has(k))map.set(k,[]);
+    map.get(k).push(d);
+  });
+  return map;
+}
+
+function renderDd(hits){
+  if(!hits.length){hideDd();return;}
+  const groups=groupResults(hits);
+  let html='';
+  groups.forEach((items,princActivo)=>{
+    html+=`<div class="ddg">${esc(princActivo)}</div>`;
+    items.forEach(d=>{
+      const idx=d._idx!==undefined?d._idx:DB.indexOf(d);
+      const no=d[3].startsWith('NO')||d[3].startsWith('Sustituir');
+      html+=`<div class="ddi" ${no?'style="opacity:.55;"':''} data-i="${idx}" onmousedown="pickItem(${idx})">
+        <span class="fchip">${esc(d[2])}</span>
+        <span class="ddi-com">${esc(d[1])}</span>
+      </div>`;
+    });
+  });
+  const dd=document.getElementById('dd');
+  dd.innerHTML=html;
+  dd.classList.add('open');
+}
+
+function handleInput(v){
+  ddIdx=-1;
+  if(!v.trim()){hideDd();document.getElementById('res').innerHTML='';return;}
+  renderDd(search(v).slice(0,24));
+}
+
+function handleKey(e){
+  const dd=document.getElementById('dd');
+  const items=dd.querySelectorAll('.ddi');
+  if(!dd.classList.contains('open'))return;
+  if(e.key==='ArrowDown'){e.preventDefault();ddIdx=Math.min(ddIdx+1,items.length-1);updSel(items);}
+  else if(e.key==='ArrowUp'){e.preventDefault();ddIdx=Math.max(ddIdx-1,0);updSel(items);}
+  else if(e.key==='Enter'){e.preventDefault();
+    if(ddIdx>=0&&items[ddIdx]){pickItem(parseInt(items[ddIdx].dataset.i));}
+    else if(items.length===1){pickItem(parseInt(items[0].dataset.i));}
+  }
+  else if(e.key==='Escape'){hideDd();}
+}
+function updSel(items){items.forEach((it,i)=>it.classList.toggle('sel',i===ddIdx));}
+function showDd(){if(document.getElementById('inp').value.trim())handleInput(document.getElementById('inp').value);}
+function hideDd(){const dd=document.getElementById('dd');dd.classList.remove('open');dd.innerHTML='';}
+
+function pickItem(idx){
+  sel=DB[idx];
+  document.getElementById('inp').value=sel[0]+' — '+sel[2];
+  hideDd();showResult();
+}
+
+function setVia(v){
+  via=v;
+  document.getElementById('v-g').classList.toggle('on',v==='G');
+  document.getElementById('v-y').classList.toggle('on',v==='Y');
+  if(sel)showResult();
+}
+
+function showResult(){
+  if(!sel)return;
+  const mkey=nm(sel[0]+sel[2]);
+  const m=MANUAL[mkey]||null;
+  const instr=via==='G'?(m?m.g:sel[3]):(m?m.y:sel[4]);
+  const ne=m?m.ne:sel[5];
+  const rec=m?m.r:sel[6];
+  const niosh=m?(m.n||0):(sel[7]||0);
+  const neText=NE_TXT[ne]||ne;
+  const fuente=m?'manual':'db';
+  const srcBadge=fuente==='manual'?'<span class="stag stm">✦ Protocolo H. San Pedro</span>':'<span class="stag stia">UMI · H. San Pedro</span>';
+  const nioshBadge=niosh?`<span class="nbadge ${niosh===1?'n1b':niosh===2?'n2b':'n3b'}">MP R${niosh}</span>`:'';
+  const isLiq=/sol jar|gts or|amp\/vial|amp\/|vial|sobre gra|polvo s|efv|sol jar/i.test(sel[2]);
+  const nioshAlert=niosh?(()=>{
+    let msg='',cls='aamb';
+    if(niosh===1){cls='ared';msg='MP Riesgo 1 (antineoplásico). Administrar siempre con guantes de nitrilo. Si hay que triturar o fraccionar: equipo triturador + cortador manual + guantes nitrilo + gafas de protección. Residuos → Contenedor azul.';}
+    else if(niosh===2&&!isLiq){cls='aora';msg='MP Riesgo 2. Administrar siempre con guantes de nitrilo. Si hay que triturar o fraccionar: equipo triturador + cortador manual + guantes nitrilo + gafas de protección. Residuos → Contenedor azul.';}
+    else if(niosh===2&&isLiq){cls='aora';msg='MP Riesgo 2 (forma líquida). Administrar con guantes de nitrilo. Añadir bata + protección ocular si riesgo de salpicadura (p.ej. por sonda o paciente no colaborador). Si posibilidad de inhalación: mascarilla FPP3. Residuos → Contenedor azul.';}
+    else if(niosh===3&&!isLiq){cls='aamb';msg='MP Riesgo 3. No se precisa protección especial, salvo situación de riesgo reproductivo. En ese caso: guantes de nitrilo para administrar; si hay que triturar: equipo triturador + cortador manual + guantes + gafas. Residuos → Bolsa verde.';}
+    else{cls='aamb';msg='MP Riesgo 3 (forma líquida). No se precisa protección especial, salvo situación de riesgo reproductivo. En ese caso: seguir las indicaciones de los grupos Riesgo 1 y 2. Residuos → Bolsa verde.';}
+    return `<div class="abox ${cls}">⚠️ ${msg}</div>`;
+  })():'';
+  const noAdm=(instr||'').startsWith('NO')||((instr||'').startsWith('Sustituir'));
+  const instrHTML=noAdm?`<div class="abox ared">⛔ ${esc(instr)}</div>`:`<div class="fa">${esc(instr)}</div>`;
+  const neClass=ne==='S'?'agre':'aamb';
+  document.getElementById('res').innerHTML=`
+  <div class="rw">
+    <div class="rhead"><div class="rhico">📋</div><div class="rhtit">Tu consulta</div></div>
+    <div class="qbox">
+      <div class="ql">Medicamento / principio activo:</div>
+      <div class="qv">${esc(sel[0].toUpperCase())}${nioshBadge}</div>
+      <div class="ql" style="margin-top:6px;">Nombre comercial:</div>
+      <div class="qv" style="font-weight:500;">${esc(sel[1])}</div>
+      <div class="ql" style="margin-top:6px;">Forma farmacéutica:</div>
+      <div class="qv"><span style="background:#e0f2f0;color:#0f766e;font-size:12px;padding:2px 9px;border-radius:10px;font-weight:700;">${esc(sel[2])}</span></div>
+      <div class="ql" style="margin-top:6px;">Tipo de administración:</div>
+      <div class="qv">${via==='G'?'GASTROSTOMÍA / SNG':'YEYUNOSTOMÍA / SNY'}</div>
+      <div style="margin-top:6px;">${srcBadge}</div>
+    </div>
+    <div class="adhead" style="margin-top:1px;box-shadow:0 1px 3px rgba(0,0,0,0.05);"><div class="rhico">💉</div><div class="rhtit">¿Cómo se administra?</div></div>
+    <div class="fields">
+      ${nioshAlert}
+      <div class="field">
+        <div class="fq">¿Cómo debes suministrar esta pauta de medicación?</div>
+        ${instrHTML}
+      </div>
+      <div class="field">
+        <div class="fq">¿Es compatible con la Nutrición Enteral?</div>
+        <div class="fa">${esc(neText)}</div>
+        ${ne==='S'?`<div class="abox agre">✓ Compatible. No precisa interrupción de la NE.</div>`:
+          (ne==='N2'||ne==='N_1H')?`<div class="abox ared">⏱ ${esc(neText)}</div>`:
+          ne==='N1H'?`<div class="abox ared">⏱ ${esc(neText)}</div>`:
+          ne==='ND'||ne==='NV'?`<div class="abox agre">▶ ${esc(neText)}</div>`:
+          ne==='NF'?`<div class="abox agre">✓ ${esc(neText)}</div>`:
+          `<div class="abox aamb">⏱ ${esc(neText)}</div>`}
+      </div>
+      ${rec?`<div class="field"><div class="fq">Además, debes tener en cuenta...</div><div class="fa">${esc(rec)}</div></div>`:''}
+    </div>
+  </div>`;
+}
+
+function openRec(){document.getElementById('mrec').classList.add('open');document.body.style.overflow='hidden';}
+function closeRec(){document.getElementById('mrec').classList.remove('open');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeRec();});
+document.addEventListener('click',e=>{if(!document.getElementById('srow').contains(e.target))hideDd();});
+function tcat(el){const sp=el.querySelector('span');const open=sp.textContent==='∧';let s=el.nextElementSibling;while(s&&!s.classList.contains('acat')){s.style.display=open?'none':'block';s=s.nextElementSibling;}sp.textContent=open?'∨':'∧';}
+function tacc(el){const b=el.nextElementSibling;const sp=el.querySelector('span');const o=b.classList.contains('open');b.classList.toggle('open',!o);sp.textContent=o?'∨':'∧';}
+function esc(s){if(!s&&s!==0)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+</script>
+</body>
+</html>
