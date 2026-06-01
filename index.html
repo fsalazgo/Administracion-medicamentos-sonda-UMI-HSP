@@ -7,10 +7,10 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#f4f6f8;color:#1a1a1a;min-height:100vh;}
-header{background:#2d8c85;color:white;padding:0 1rem;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+header{background:#2d8c85;color:white;padding:0 1.2rem;display:flex;align-items:center;justify-content:space-between;height:76px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
 .hl{display:flex;align-items:center;gap:9px;}
-.hico{width:30px;height:30px;background:rgba(255,255,255,0.2);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
-.htit{font-size:14px;font-weight:700;}.hsub{font-size:10px;opacity:.7;margin-top:1px;}
+.hico{width:44px;height:44px;background:rgba(255,255,255,0.2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.htit{font-size:22px;font-weight:800;letter-spacing:.01em;}.hsub{font-size:13.5px;opacity:.85;margin-top:3px;}
 .rbtn{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;font-size:11px;font-weight:600;padding:5px 11px;border-radius:20px;cursor:pointer;white-space:nowrap;font-family:inherit;}
 .rbtn:hover{background:rgba(255,255,255,0.25);}
 main{max-width:660px;margin:0 auto;padding:1.1rem 1rem 5rem;}
@@ -106,84 +106,134 @@ main{max-width:660px;margin:0 auto;padding:1.1rem 1rem 5rem;}
       <button class="mcl" onclick="closeRec()">×</button>
     </div>
     <div class="acat" onclick="tcat(this)">Recomendaciones generales <span>∧</span></div>
-    <div class="ait"><div class="aih" onclick="tacc(this)">Cuidados de la sonda <span>∨</span></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Aspectos generales <span>∨</span></div>
     <div class="aib"><ul>
-      <li>Limpiar parte externa diariamente con agua y jabón.</li>
-      <li>Verificar fijación correcta. PEG: girar al menos <strong>una vuelta completa diaria</strong>.</li>
-      <li>Lavarse las manos antes de cada manipulación.</li>
-      <li>Cabecero <strong>≥30-40°</strong> durante NE y hasta 30-60 min después.</li>
+      <li><strong>Nunca añadir fármacos al envase de NE.</strong></li>
+      <li><strong>Una jeringa ENFit (morada) por fármaco.</strong> Nunca mezclar varios medicamentos en la misma jeringa.</li>
+      <li><strong>Orden de administración:</strong> primero los líquidos (menos viscosos), luego los más espesos, sólidos al final.</li>
     </ul></div></div>
-    <div class="ait"><div class="aih" onclick="tacc(this)">Resumen del procedimiento (UCI San Pedro) <span>∨</span></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Forma farmacéutica <span>∨</span></div>
     <div class="aib">
-    <ol style="padding-left:16px;">
-      <li>Parar la NE si es continua (<strong>15 min</strong> si compatible / <strong>30 min</strong> si incompatible).</li>
-      <li>Comprobar los <strong>10 correctos</strong>.</li>
-      <li>Preparar el medicamento. Identificar el contenido de la bolsa de trituración con el embalaje original.</li>
-      <li>Comprobar en el tratamiento médico y <strong>firmar</strong> (reflejar valor si es medicación condicionada).</li>
-      <li>Administrar la medicación. Reanudar la NE si la hubiera. Si no hay NE, <strong>pinzar la sonda 30 min</strong>.</li>
-      <li>Recoger y dejar la jeringa limpia y protegida para la siguiente administración.</li>
-      <li>Registrar en el programa informático.</li>
-      <li>Retirar guantes e higiene de manos.</li>
-    </ol>
+      <strong>Orden de preferencia:</strong> <strong>1.º Líquida</strong> → <strong>2.º Triturar</strong> → <strong>3.º Dispersar</strong><br>
+      <strong>NUNCA triturar:</strong> liberación modificada (retard/XR/LP/Crono). Cubierta entérica en SNG: NO triturar (en SNY sí).<br><br><div style="margin:5px 0 0;border:1px solid #d1e7e6;border-radius:6px;overflow:hidden;">
+          <div style="padding:7px 12px;background:#edf7f6;cursor:pointer;font-size:12px;font-weight:700;color:#0f766e;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
+            Formas líquidas (solución, suspensión, gotas, jarabe) <span>∨</span>
+          </div>
+          <div style="display:none;padding:9px 13px;font-size:12.5px;color:#374151;line-height:1.7;background:white;">
+            <ul>
+            <li>Forma de elección siempre que esté disponible.</li>
+            <li><strong>Atemperar</strong> si estaban refrigeradas antes de administrar.</li>
+            <li><strong>Agitar bien</strong> antes de cargar en la jeringa.</li>
+            <li>Diluir en agua antes de administrar:<br>
+              &nbsp;&nbsp;— <strong>SNG:</strong> 30-60 ml agua<br>
+              &nbsp;&nbsp;— <strong>SNY:</strong> siempre <strong>≥100 ml</strong> (menor tolerancia osmolar en yeyuno)</li>
+            <li><strong>Osmolaridad elevada</strong> (ácido valproico sol, paracetamol gotas, lactulosa...): diluir más para evitar diarrea osmótica. Objetivo: 300-500 mOsm/kg.</li>
+            <li><strong>Sorbitol &gt;10 g/día:</strong> puede provocar diarrea significativa. Diluir con agua.</li>
+            <li><strong>Viscosidad alta</strong> (ciclosporina sol, jarabes espesos): diluir con agua templada y administrar lentamente.</li>
+            <li>No mezclar distintos líquidos en la misma jeringa.</li>
+          </ul>
+          </div>
+        </div>
+      <div style="margin:5px 0 0;border:1px solid #d1e7e6;border-radius:6px;overflow:hidden;">
+          <div style="padding:7px 12px;background:#edf7f6;cursor:pointer;font-size:12px;font-weight:700;color:#0f766e;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
+            Comprimidos <span>∨</span>
+          </div>
+          <div style="display:none;padding:9px 13px;font-size:12.5px;color:#374151;line-height:1.7;background:white;">
+            <strong>Verificar siempre que el comprimido se puede triturar</strong> (nunca retard/LP/XR/Crono ni cubierta entérica en SNG).<br><br>
+            <strong>Técnica de trituración (UCI San Pedro):</strong>
+            <ol style="margin:6px 0;padding-left:16px;">
+              <li>Triturar hasta <strong>polvo fino y homogéneo</strong>. Identificar la bolsa con el embalaje original.</li>
+              <li>Retirar el émbolo de la jeringa ENFit morada (50-60 ml), introducir el polvo y cerrar.</li>
+              <li>Añadir <strong>15-20 ml de agua</strong> y agitar hasta disolución o suspensión uniforme.</li>
+              <li>Administrar lentamente a través de la sonda.</li>
+            </ol>
+            <strong>Comprimidos dispersables / liofilizados:</strong> desleír directamente en la jeringa con 10-20 ml agua sin necesidad de triturar.<br><br>
+            <strong>Comprimidos masticables:</strong> triturar bien antes de disolver en agua.<br><br>
+            <strong style="color:#C0392B;">NUNCA triturar:</strong> liberación modificada (retard/LP/XR/Crono/SR), cubierta entérica en SNG, citostáticos en sólido.
+          </div>
+        </div>
+      <div style="margin:5px 0 0;border:1px solid #d1e7e6;border-radius:6px;overflow:hidden;">
+          <div style="padding:7px 12px;background:#edf7f6;cursor:pointer;font-size:12px;font-weight:700;color:#0f766e;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
+            Cápsulas <span>∨</span>
+          </div>
+          <div style="display:none;padding:9px 13px;font-size:12.5px;color:#374151;line-height:1.7;background:white;">
+            <strong>Cápsulas de gelatina dura (polvo o pellets):</strong>
+            <ol style="margin:6px 0;padding-left:16px;">
+              <li>Abrir la cápsula con cuidado sobre la jeringa sin émbolo.</li>
+              <li>Si contiene <strong>polvo:</strong> disolver en 10-20 ml agua y agitar.</li>
+              <li>Si contiene <strong>pellets de LI:</strong> dispersar en agua sin triturar los pellets.</li>
+              <li>Si contiene <strong>pellets LM o entéricos:</strong> abrir la cápsula pero <strong>NO triturar los pellets</strong>. Precaución: riesgo de obstrucción en sondas finas.</li>
+            </ol>
+            <strong>Cápsulas de gelatina blanda (oleosas/líquidas):</strong>
+            <ol style="margin:6px 0;padding-left:16px;">
+              <li>Perforar la cápsula con una aguja fina.</li>
+              <li>Extraer el contenido y diluir en 10-30 ml agua.</li>
+              <li>Riesgo elevado de obstrucción. Si hay alternativa en solución, preferirla.</li>
+            </ol>
+          </div>
+        </div>
+      <div style="margin:5px 0 0;border:1px solid #d1e7e6;border-radius:6px;overflow:hidden;">
+          <div style="padding:7px 12px;background:#edf7f6;cursor:pointer;font-size:12px;font-weight:700;color:#0f766e;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
+            Comprimidos efervescentes <span>∨</span>
+          </div>
+          <div style="display:none;padding:9px 13px;font-size:12.5px;color:#374151;line-height:1.7;background:white;">
+            <ol style="margin:6px 0;padding-left:16px;">
+              <li>Disolver el comprimido en <strong>≥30 ml de agua</strong>.</li>
+              <li><strong>Esperar a que la efervescencia termine completamente</strong> antes de cargar en jeringa.</li>
+              <li>Aspirar con jeringa ENFit y administrar.</li>
+              <li>Lavar con 5-10 ml agua adicionales para arrastrar restos.</li>
+            </ol>
+            <strong style="color:#C0392B;">No administrar con gas activo:</strong> puede distender la sonda y causar molestias al paciente.
+          </div>
+        </div>
+      <div style="margin:5px 0 0;border:1px solid #d1e7e6;border-radius:6px;overflow:hidden;">
+          <div style="padding:7px 12px;background:#edf7f6;cursor:pointer;font-size:12px;font-weight:700;color:#0f766e;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
+            Sobres (polvo para solución) <span>∨</span>
+          </div>
+          <div style="display:none;padding:9px 13px;font-size:12.5px;color:#374151;line-height:1.7;background:white;">
+            <ol style="margin:6px 0;padding-left:16px;">
+              <li>Verter el contenido del sobre en <strong>20-50 ml de agua</strong> (ver indicación específica del fármaco).</li>
+              <li>Agitar hasta <strong>disolución o suspensión uniforme</strong>.</li>
+              <li><strong>Administrar inmediatamente</strong> (algunos principios activos son inestables en solución).</li>
+              <li>Lavar con 10-15 ml agua adicionales.</li>
+            </ol>
+            <strong>SNY:</strong> usar siempre el volumen mayor de dilución (≥50 ml) para reducir la osmolaridad.
+          </div>
+        </div>
     </div></div>
-    <div class="ait"><div class="aih" onclick="tacc(this)">Antes de la administración <span>∨</span></div>
-    <div class="aib">
-    <ul>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Administración <span>∨</span></div>
+    <div class="aib"><ul>
+      <li>Lavarse las manos antes de cada manipulación.</li>
+      <li>Cabecero <strong>30-45°</strong> durante la administración de NE.</li>
+      <li>Verificar compatibilidad del fármaco vía SNG/SNY, con NE y si es fármaco biopeligroso.</li>
+      <li><strong>Lavar la sonda una vez por turno con 50 ml de agua</strong> (si hay administración en la 1ª toma de cada turno, sirve también para comprobar permeabilidad).</li>
       <li>Comprobar tipo y posición de la sonda.</li>
-      <li>Lavar la sonda con <strong>20 ml de agua</strong> con jeringa ENFit (morada) para comprobar permeabilidad.</li>
-      <li>Si la NE es continua y el fármaco es <strong>compatible</strong>: parar NE <strong>15 min antes</strong>.</li>
-      <li>Si el fármaco es <strong>no compatible</strong>: parar NE <strong>30 min antes</strong> (norma UCI San Pedro). Excepciones indicadas en la ficha del fármaco.</li>
-    </ul>
-    </div></div>
-    <div class="ait"><div class="aih" onclick="tacc(this)">Forma farmacéutica — orden de preferencia <span>∨</span></div>
-    <div class="aib"><strong>1.º Líquida</strong> (sol/suspensión) → <strong>2.º Dispersar/disgregar</strong> → <strong>3.º Triturar</strong>.<br><br>
-    <strong>NUNCA triturar:</strong> liberación modificada (retard/XR/LP/Crono), cubierta entérica en vía gástrica.<br>
-    <strong>MP Riesgo 1+2 sólidos:</strong> si hay que triturar, usar equipo triturador + cortador manual + guantes nitrilo + gafas.</div></div>
+      <li>Lavar la sonda con <strong>30 ml de agua</strong> para comprobar permeabilidad antes de la administración. No hace falta si coincide con el lavado de SNG/SNY programado.</li>
+      <li>
+        <strong style="color:#1B8A50;">Fármaco COMPATIBLE con NE:</strong> parar NE <strong>15 min</strong> antes para el lavado y la administración. Reanudar la NE inmediatamente al terminar.<br><br>
+        <strong style="color:#D35400;">Fármaco NO COMPATIBLE (norma general):</strong><br>
+        Parar NE → esperar <strong>30 min</strong> → administrar fármaco → esperar <strong>30 min</strong> → reiniciar NE.<br><br>
+        <strong style="color:#C0392B;">Fármaco NO COMPATIBLE — grupos especiales</strong> (indicado en ficha):<br>
+        Antibióticos (quinolonas, rifamicinas), antifúngicos azólicos, antivirales, antiepilépticos, inmunosupresores, levotiroxina y otros fármacos cuya eficacia se compromete con la NE:<br>
+        Parar NE → esperar <strong>1h</strong> → administrar → esperar <strong>2h</strong> → reiniciar NE.<br><br>
+        <strong style="color:#6C0EFF;">Fenitoína:</strong> Parar NE → esperar <strong>2h</strong> → administrar → esperar <strong>2h</strong> → reiniciar NE.<br><br>
+        <strong>Sin NE activa:</strong> tras administrar la medicación, <strong>pinzar la sonda 30 minutos.</strong>
+      </li>
+      <li>Lavar con <strong>10-15 ml de agua</strong> entre cada medicamento.</li>
+      <li>Lavar con <strong>50 ml de agua</strong> al finalizar toda la medicación.</li>
+    </ul></div></div>
     <div class="ait"><div class="aih" onclick="tacc(this)">Interacción fármacos–NE — Norma UCI San Pedro <span>∨</span></div>
     <div class="aib">
     <strong>Fármaco COMPATIBLE con NE:</strong> parar NE <strong>15 min antes</strong> para el lavado y la administración. Reanudar la NE inmediatamente al terminar.<br><br>
     <strong>Fármaco NO COMPATIBLE (norma general):</strong><br>
     Parar NE → esperar <strong>30 min</strong> → administrar fármaco → esperar <strong>30 min</strong> → reiniciar NE.<br><br>
     <strong>Fármaco NO COMPATIBLE — grupos especiales (indicado en ficha):</strong><br>
-    Antiepilépticos, inmunosupresores, antibióticos, antifúngicos y antivirales incompatibles:<br>
+    Antibióticos (quinolonas, rifamicinas), antifúngicos azólicos, antivirales, antiepilépticos, inmunosupresores, levotiroxina y otros fármacos incompatibles cuya eficacia se compromete con la NE:<br>
     Parar NE → esperar <strong>1h</strong> → administrar → esperar <strong>2h</strong> → reiniciar NE.<br>
     <strong>Fenitoína:</strong> Parar NE → esperar <strong>2h</strong> → administrar → esperar <strong>2h</strong> → reiniciar NE.<br><br>
     <strong>Si no hay NE activa:</strong> tras administrar la medicación, pinzar la sonda <strong>30 minutos</strong>.
     </div></div>
-    <div class="ait"><div class="aih" onclick="tacc(this)">Durante la administración <span>∨</span></div>
-    <div class="aib"><ul>
-      <li><strong>Nunca añadir fármacos al envase de NE.</strong></li>
-      <li>Una jeringa ENFit (morada) por fármaco. Nunca mezclar.</li>
-      <li>Orden de administración: primero los <strong>líquidos</strong> (menos viscosos), luego los más espesos, <strong>sólidos al final</strong>.</li>
-      <li>Lavar con <strong>10-15 ml de agua</strong> entre cada medicamento.</li>
-      <li>Lavar con <strong>50 ml de agua</strong> al finalizar toda la medicación.</li>
-    </ul></div></div>
-    <div class="ait"><div class="aih" onclick="tacc(this)">Cuidados del material <span>∨</span></div>
-    <div class="aib"><ul>
-      <li>Usar siempre <strong>jeringa ENFit (morada) de 50-60 ml</strong>. Nunca jeringas IV.</li>
-      <li>Lavar la jeringa con agua tras cada uso. Dejarla limpia y protegida para la siguiente administración. Vida útil máxima: <strong>3-4 días</strong>.</li>
-      <li>Equipo de infusión de NE: cambiar cada <strong>24 horas</strong>.</li>
-    </ul></div></div>
-
-    <div class="acat" onclick="tcat(this)">Normas por forma farmacéutica <span>∧</span></div>
-    <div class="ait"><div class="aih" onclick="tacc(this)">Líquidas (sol, suspensión, jarabe, gotas) <span>∨</span></div>
-    <div class="aib">Forma de elección. Suspensiones/soluciones > jarabes.<br><br><ul>
-      <li><strong>Osmolaridad alta:</strong> diluir ≥30-60 mL agua para SNG. Para <strong>SNY: diluir siempre en 100 mL</strong> (menor tolerancia osmolar en yeyuno).</li>
-      <li><strong>Sorbitol >10 g/día:</strong> diluir para evitar distensión/diarrea.</li>
-      <li><strong>Viscosidad alta:</strong> diluir ≥30 mL para evitar obstrucción.</li>
-    </ul></div></div>
-    <div class="ait"><div class="aih" onclick="tacc(this)">Comprimidos LI / Grageas <span>∨</span></div>
-    <div class="aib"><strong>Dispersión (preferida):</strong> Retirar émbolo jeringa 20-60 mL → introducir comp → añadir 15-30 mL agua templada → agitar 3-15 min → administrar → lavar 30 mL.<br><br>
-    <strong>Trituración:</strong> Mortero hasta polvo fino → disolver 15-30 mL agua → administrar → lavar 30 mL.<br><br>
-    <strong>Efervescentes:</strong> Disolver en 30 mL agua, esperar efervescencia completa.<br><br>
-    <strong>Cubierta entérica SNG:</strong> NO triturar. <strong>Cubierta entérica SNY:</strong> SÍ se puede triturar.<br><br>
-    <strong>⚠️ Liberación modificada (retard/XR/LP/Crono):</strong> NUNCA triturar.</div></div>
-    <div class="ait"><div class="aih" onclick="tacc(this)">Cápsulas <span>∨</span></div>
-    <div class="aib"><strong>Duras:</strong> Abrir, disolver 10-20 mL agua, lavar 5-10 mL.<br>
-    Microgránulos LM: abrir pero NO triturar microgránulos.<br>
-    Microgránulos entéricos: disolver en líquido ácido (zumo manzana).<br><br>
-    <strong>Blandas:</strong> Extraer líquido con aguja fina, diluir 10-30 mL agua. Mayor riesgo obstrucción.</div></div>
-    <div class="ait"><div class="aih" onclick="tacc(this)">Medicamentos peligrosos (MP) — equipos de protección <span>∨</span></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Medicamentos biopeligrosos — equipos de protección <span>∨</span></div>
     <div class="aib" style="padding:0;">
       <div style="background:#7f1d1d;color:white;padding:7px 14px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;">&#128138; Formas farmacéuticas sólidas</div>
       <table style="width:100%;border-collapse:collapse;font-size:12px;">
@@ -230,8 +280,27 @@ main{max-width:660px;margin:0 auto;padding:1.1rem 1rem 5rem;}
         </tbody>
       </table>
       <div style="padding:7px 12px;font-size:11px;color:#6b7280;border-top:1px solid #e5e7eb;background:#f9fafb;">Líquidos R2: Espironolactona, Micofenolato de Mofetilo, Ciclosporina &#160;·&#160; Líquidos R3: Ácido Valproico (sol), Voriconazol (sol)</div>
+    </div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Cuidados del material <span>∨</span></div>
+    <div class="aib"><ul>
+      <li>Usar siempre <strong>jeringa ENFit (morada) de 50-60 ml</strong>. Nunca jeringas IV.</li>
+      <li>Lavar la jeringa con agua tras cada uso. Dejarla limpia y protegida para la siguiente administración. Vida útil máxima: <strong>3-4 días</strong>.</li>
+      <li>Equipo de infusión de NE: cambiar cada <strong>24 horas</strong>.</li>
+    </ul></div></div>
+    <div class="ait"><div class="aih" onclick="tacc(this)">Resumen del procedimiento (UCI San Pedro) <span>∨</span></div>
+    <div class="aib">
+    <ol style="padding-left:16px;">
+      <li>Parar la NE si es continua (<strong>15 min</strong> si compatible / <strong>30 min</strong> si incompatible / <strong>1h</strong> si mayor incompatibilidad: quinolonas, rifamicinas, antifúngicos, antivirales, antiepilépticos, inmunosupresores, levotiroxina).</li>
+      <li>Comprobar los <strong>10 correctos</strong>.</li>
+      <li>Preparar el medicamento. Identificar el contenido de la bolsa de trituración con el embalaje original.</li>
+      <li>Comprobar en el tratamiento médico y <strong>firmar</strong> (reflejar valor si es medicación condicionada).</li>
+      <li>Administrar la medicación. Reanudar la NE si la hubiera. Si no hay NE, <strong>pinzar la sonda 30 min</strong>.</li>
+      <li>Recoger y dejar la jeringa limpia y protegida para la siguiente administración.</li>
+      <li>Registrar en el programa informático.</li>
+      <li>Retirar guantes e higiene de manos.</li>
+    </ol>
     </div></div>
-    <div class="msrc">Protocolo UMI · Hospital Universitario San Pedro de Logroño</div>
+    <div class="msrc" style="font-size:11px;color:#9ca3af;padding:.65rem 1.1rem;text-align:right;border-top:1px solid #e9ecef;">UMI · Hospital San Pedro de Logroño</div>
   </div>
 </div>
 
@@ -808,6 +877,20 @@ const DB = [
 ["Micofenolato de mofetilo","Micofenolato EFG, CellCept®","Cap","NO manipular. Usar únicamente la presentación en solución.","NO manipular.","N2","NIOSH-2. Doble guante + protección. Separar NE 1h antes y 2h después.",2],
 
 ["Potasio bicarbonato / Ácido ascórbico","BOI-K®","Comp Efv","Disolver en 20 ml agua y esperar a que complete la efervescencia antes de administrar.","Igual que gástrica (solución resultante)","N1","Riesgo de coagulación de la NE. Administrar siempre el último si hay más medicación.",0],
+
+["Famotidina","Famotidina EFG","Comp","Pulverizar y dispersar en 10 ml agua","Igual que gástrica","S","",0],
+["Minoxidilo","Loniten®","Comp","Pulverizar y dispersar en 10 ml agua","Igual que gástrica","S","",0],
+
+
+["Fidaxomicina","Dificlir®","Comp","Pulverizar finamente y diluir en 15 ml agua, administrar inmediatamente","Igual que gástrica","S","Antibiótico para C. difficile. Mínima absorción sistémica.",0],
+["Rifaximina","Spiraxin®","Comp Rec","Pulverizar finamente y diluir en 15 ml agua, administrar inmediatamente","Igual que gástrica","S","Antibiótico intestinal. Prácticamente sin absorción sistémica.",0],
+["Clobazam","Noiafren®","Comp","Pulverizar finamente y diluir en 15 ml agua","Igual que gástrica","S","Antiepiléptico (benzo). MP Riesgo 3 (riesgo reproductivo). Sin protección salvo riesgo reproductivo.",3],
+["Gliclazida","Diamicron® MR","Comp","Pulverizar finamente y diluir en 15 ml agua","Igual que gástrica","S","Administrar con o inmediatamente antes de la NE. Protocolo H. San Pedro: pulverizable según ficha interna.",0],
+["Dapagliflozina","Forxiga®","Comp","Pulverizar finamente y diluir en 15 ml agua","Igual que gástrica","S","Administrar con NE para disminuir molestias GI.",0],
+
+
+["Melatonina","Circadin®","Comp Lib Prol","Pulverizar finamente y dispersar en 10-15 ml agua, administrar inmediatamente","Igual que gástrica","S","⚠ Al administrar por sonda se pierde el efecto de liberación prolongada: el inicio de acción será más rápido pero la duración del efecto, menor.",0],
+
 ];
 
 // ══════════════════════════════════════════════════════
@@ -946,6 +1029,9 @@ function showResult(){
           `<div class="abox aamb">⏱ ${esc(neText)}</div>`}
       </div>
       ${rec?`<div class="field"><div class="fq">Además, debes tener en cuenta...</div><div class="fa">${esc(rec)}</div></div>`:''}
+    <div style="padding:5px 12px 8px;font-size:10px;color:#9ca3af;border-top:1px solid #f0f0f0;font-style:italic;">
+      💬 Si tienes dudas sobre este fármaco, consulta con el/la farmacéutico/a de guardia.
+    </div>
     </div>
   </div>`;
 }
