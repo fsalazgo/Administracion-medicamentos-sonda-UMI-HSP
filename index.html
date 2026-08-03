@@ -13,6 +13,8 @@ header{background:#2d8c85;color:white;padding:0 1.2rem;display:flex;align-items:
 .htit{font-size:22px;font-weight:800;letter-spacing:.01em;}.hsub{font-size:13.5px;opacity:.85;margin-top:3px;}
 .rbtn{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;font-size:14px;font-weight:600;padding:9px 18px;border-radius:20px;cursor:pointer;white-space:nowrap;font-family:inherit;}
 .rbtn:hover{background:rgba(255,255,255,0.25);}
+.hright{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.hdate{font-size:10px;color:rgba(255,255,255,0.75);font-weight:500;}
 main{max-width:660px;margin:0 auto;padding:1.1rem 1rem 5rem;}
 .scard{background:white;border-radius:12px;padding:1.1rem;margin-bottom:.9rem;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
 .slabel{font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;}
@@ -78,7 +80,10 @@ main{max-width:660px;margin:0 auto;padding:1.1rem 1rem 5rem;}
     <div class="hico">💊</div>
     <div><div class="htit">SNG-Farma UCI</div><div class="hsub">UMI · Hospital Universitario San Pedro</div></div>
   </div>
-  <button class="rbtn" onclick="openRec()">📋 Recomendaciones generales</button>
+  <div class="hright">
+    <button class="rbtn" onclick="openRec()">📋 Recomendaciones generales</button>
+    <div class="hdate">Actualizado: 03/08/2026</div>
+  </div>
 </header>
 
 <main>
@@ -548,7 +553,7 @@ const DB = [
 ["Levofloxacino","Levofloxacino EFG, Tavanic®","Comp Rec","Triturar (eliminar cubierta), diluir 15-20 ml agua","Igual que gástrica","N_1H","Separar de antiácidos con Mg o Al.",0],
 ["Levomepromazina","Sinogan®","Comp Rec","Sustituir por Sinogan® gotas.","Sustituir por gotas.","N1","",0],
 ["Levomepromazina","Sinogan®","Gts Or","Disolver en 10 ml agua, administrar","Igual que gástrica","N1","",0],
-["Levotiroxina","Eutirox®","Comp","Desleír 10-20 ml agua","Igual que gástrica","N_1H","Administrar 1h antes o 2h después de NE. Múltiples interacciones.",0],
+["Levotiroxina","Eutirox®","Comp","Desleír 10-20 ml agua","Igual que gástrica","NLT","Administrar 1h antes y reanudar NE 1h después. Múltiples interacciones.",0],
 ["Linagliptina","Trajenta®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
 ["Linezolid","Zyvoxid®","Comp Rec","Triturar, diluir 15-20 ml agua, administrar inmediatamente","Igual que gástrica","S","Biodisponibilidad oral ~100%. Candidato a step-down desde IV.",0],
 ["Litio, carbonato","Plenur®","Comp Lib M","NO triturar (liberación sostenida). Contactar SF.","NO triturar.","S","",0],
@@ -904,7 +909,7 @@ const DB = [
 // APP LOGIC
 // ══════════════════════════════════════════════════════
 let via='G', sel=null, ddIdx=-1;
-const NE_TXT = {S:"Compatible con la NE",N1:"Parar NE 30 min antes y 30 min después",N2:"Parar NE 2h antes y 2h después",N_1H:"Parar NE 1h antes y 2h después",ND:"Administrar inmediatamente después de la NE",NA:"Administrar antes de iniciar la NE",N30:"Administrar 30 min antes de la NE",N15:"Administrar 15 min antes de la NE",NF:"Compatible (separar si NE con fibra)",NC:"Parar NE 30 min antes y 30 min después",NV:"Administrar coincidiendo con la NE."};
+const NE_TXT = {S:"Compatible con la NE",N1:"Parar NE 30 min antes y 30 min después",N2:"Parar NE 2h antes y 2h después",N_1H:"Parar NE 1h antes y 2h después",NLT:"Parar NE 1h antes y 1h después",ND:"Administrar inmediatamente después de la NE",NA:"Administrar antes de iniciar la NE",N30:"Administrar 30 min antes de la NE",N15:"Administrar 15 min antes de la NE",NF:"Compatible (separar si NE con fibra)",NC:"Parar NE 30 min antes y 30 min después",NV:"Administrar coincidiendo con la NE."};
 
 function nm(s){return(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 /]/g,'');}
 
@@ -994,8 +999,8 @@ function showResult(){
   const isLiq=/sol jar|gts or|amp\/vial|amp\/|vial|sobre gra|polvo s|efv|sol jar/i.test(sel[2]);
   const nioshAlert=niosh?(()=>{
     let msg='',cls='aamb';
-    if(niosh===1){cls='ared';msg='MP Riesgo 1 (antineoplásico). Administrar siempre con guantes de nitrilo. Si hay que triturar o fraccionar: equipo triturador + cortador manual + guantes nitrilo + gafas de protección. Residuos → Contenedor azul.';}
-    else if(niosh===2&&!isLiq){cls='aora';msg='MP Riesgo 2. Administrar siempre con guantes de nitrilo. Si hay que triturar o fraccionar: equipo triturador + cortador manual + guantes nitrilo + gafas de protección. Residuos → Contenedor azul.';}
+    if(niosh===1){cls='ared';msg='MP Riesgo 1 (antineoplásico). Administrar siempre con guantes de nitrilo. Si hay que triturar o fraccionar: equipo triturador + cortador manual + guantes nitrilo + bata verde + mascarilla FFP3 + gafas de protección. Residuos → Contenedor azul.';}
+    else if(niosh===2&&!isLiq){cls='aora';msg='MP Riesgo 2. Administrar siempre con guantes de nitrilo. Si hay que triturar o fraccionar: equipo triturador + cortador manual + guantes nitrilo + bata verde + mascarilla FFP3 + gafas de protección. Residuos → Contenedor azul.';}
     else if(niosh===2&&isLiq){cls='aora';msg='MP Riesgo 2 (forma líquida). Administrar con guantes de nitrilo. Añadir bata + protección ocular si riesgo de salpicadura (p.ej. por sonda o paciente no colaborador). Si posibilidad de inhalación: mascarilla FPP3. Residuos → Contenedor azul.';}
     else if(niosh===3&&!isLiq){cls='aamb';msg='MP Riesgo 3. No se precisa protección especial, salvo situación de riesgo reproductivo. En ese caso: guantes de nitrilo para administrar; si hay que triturar: equipo triturador + cortador manual + guantes + gafas. Residuos → Bolsa verde.';}
     else{cls='aamb';msg='MP Riesgo 3 (forma líquida). No se precisa protección especial, salvo situación de riesgo reproductivo. En ese caso: seguir las indicaciones de los grupos Riesgo 1 y 2. Residuos → Bolsa verde.';}
@@ -1029,7 +1034,7 @@ function showResult(){
         <div class="fq">¿Es compatible con la Nutrición Enteral?</div>
         <div class="fa">${esc(neText)}</div>
         ${ne==='S'?`<div class="abox agre">✓ Compatible. Parar NE 15 min antes para administrar. Reanudar inmediatamente al terminar.</div>`:
-          (ne==='N2'||ne==='N_1H')?`<div class="abox ared">⏱ ${esc(neText)}</div>`:
+          (ne==='N2'||ne==='N_1H'||ne==='NLT')?`<div class="abox ared">⏱ ${esc(neText)}</div>`:
           ne==='N1H'?`<div class="abox ared">⏱ ${esc(neText)}</div>`:
           ne==='ND'||ne==='NV'?`<div class="abox agre">▶ ${esc(neText)}</div>`:
           ne==='NF'?`<div class="abox agre">✓ ${esc(neText)}</div>`:
