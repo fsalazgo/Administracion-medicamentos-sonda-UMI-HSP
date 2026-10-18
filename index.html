@@ -3,86 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SNG-Farma · UCI · H. San Pedro</title>
+<title>SNG-Farma · UMI · H. San Pedro</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#f4f6f8;color:#1a1a1a;min-height:100vh;}
-header{background:#2d8c85;color:white;padding:0 1.2rem;display:flex;align-items:center;justify-content:space-between;height:76px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+header{background:#1F3A5F;color:white;padding:0 1.2rem;display:flex;align-items:center;justify-content:space-between;height:76px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
 .hl{display:flex;align-items:center;gap:9px;}
-.hico{width:44px;height:44px;background:rgba(255,255,255,0.2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:24px;}
-.htit{font-size:22px;font-weight:800;letter-spacing:.01em;}.hsub{font-size:13.5px;opacity:.85;margin-top:3px;}
+.hico{width:44px;height:44px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.htit{font-size:24px;font-weight:800;letter-spacing:.01em;}.hsub{font-size:14.5px;opacity:.85;margin-top:3px;}
 .rbtn{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:white;font-size:14px;font-weight:600;padding:9px 18px;border-radius:20px;cursor:pointer;white-space:nowrap;font-family:inherit;}
 .rbtn:hover{background:rgba(255,255,255,0.25);}
 .hright{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
-.hdate{font-size:10px;color:rgba(255,255,255,0.75);font-weight:500;}
-main{max-width:660px;margin:0 auto;padding:1.1rem 1rem 5rem;}
+.hdate{font-size:11px;color:rgba(255,255,255,0.8);font-weight:500;cursor:pointer;background:none;border:none;font-family:inherit;padding:0;text-align:right;}
+.hdate:hover{color:white;text-decoration:underline;}
+main{max-width:740px;margin:0 auto;padding:1.1rem 1rem 2rem;}
 .scard{background:white;border-radius:12px;padding:1.1rem;margin-bottom:.9rem;box-shadow:0 1px 4px rgba(0,0,0,0.08);}
-.slabel{font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;}
+.slabel{font-size:12.5px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;}
 .srow{display:flex;gap:7px;position:relative;}
-.sinput{flex:1;border:1.5px solid #e5e7eb;border-radius:8px;padding:9px 13px;font-size:15px;outline:none;transition:border-color .15s;font-family:inherit;}
-.sinput:focus{border-color:#2d8c85;}
+.sinput{flex:1;border:1.5px solid #e5e7eb;border-radius:8px;padding:10px 14px;font-size:16px;outline:none;transition:border-color .15s;font-family:inherit;}
+.sinput:focus{border-color:#1F3A5F;}
 .sinput::placeholder{color:#9ca3af;}
-.sdd{position:absolute;top:calc(100% + 4px);left:0;right:0;background:white;border:1.5px solid #2d8c85;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.12);z-index:50;max-height:320px;overflow-y:auto;display:none;}
+.sdd{position:absolute;top:calc(100% + 4px);left:0;right:0;background:white;border:1.5px solid #1F3A5F;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.12);z-index:50;max-height:320px;overflow-y:auto;display:none;}
 .sdd.open{display:block;}
 /* Cabecera de grupo en el dropdown */
-.ddg{padding:5px 12px 2px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#2d8c85;background:#f7fafa;border-bottom:1px solid #e9ecef;position:sticky;top:0;}
+.ddg{padding:5px 12px 2px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#1F3A5F;background:#f5f8fb;border-bottom:1px solid #e9ecef;position:sticky;top:0;}
 /* Item de forma dentro del grupo */
 .ddi{padding:8px 12px 8px 16px;cursor:pointer;border-bottom:1px solid #f5f5f5;display:flex;align-items:center;gap:8px;}
 .ddi:last-child{border-bottom:none;}
-.ddi:hover,.ddi.sel{background:#edf7f6;}
-.ddi-forma{font-size:13px;font-weight:600;color:#1a1a1a;flex:1;}
-.ddi-com{font-size:11px;color:#6b7280;}
-.fchip{display:inline-block;font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px;background:#e0f2f0;color:#0f766e;white-space:nowrap;}
+.ddi:hover,.ddi.sel{background:#e8eef6;}
+.ddi-forma{font-size:14.5px;font-weight:600;color:#1a1a1a;flex:1;}
+.ddi-com{font-size:12px;color:#6b7280;}
+.fchip{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:10px;background:#dde7f3;color:#1F3A5F;white-space:nowrap;}
 .vrow{display:flex;gap:6px;margin-top:9px;}
-.vbtn{flex:1;padding:7px 6px;border:1.5px solid #e5e7eb;border-radius:7px;background:white;font-size:12px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .15s;text-align:center;font-family:inherit;}
-.vbtn.on{border-color:#2d8c85;background:#edf7f6;color:#2d8c85;}
+.vbtn{flex:1;padding:7px 6px;border:1.5px solid #e5e7eb;border-radius:7px;background:white;font-size:13.5px;font-weight:600;color:#6b7280;cursor:pointer;transition:all .15s;text-align:center;font-family:inherit;}
+.vbtn.on{border-color:#1F3A5F;background:#e8eef6;color:#1F3A5F;}
 .rw{animation:fi .2s ease;}
 @keyframes fi{from{opacity:0;transform:translateY(3px);}to{opacity:1;transform:translateY(0);}}
 .rhead{background:white;border-radius:12px 12px 0 0;padding:.9rem 1.1rem;border-bottom:1px solid #e9ecef;display:flex;align-items:center;gap:9px;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
-.rhico{width:34px;height:34px;background:#edf7f6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
-.rhtit{font-size:12px;font-weight:800;color:#1a1a1a;text-transform:uppercase;letter-spacing:.05em;}
-.qbox{background:#f0f4f3;padding:.8rem 1.1rem;}
-.ql{font-size:11px;color:#6b7280;margin-bottom:2px;}.qv{font-size:13px;font-weight:700;color:#1a1a1a;}
+.rhico{width:34px;height:34px;background:#e8eef6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.rhtit{font-size:14px;font-weight:800;color:#1a1a1a;text-transform:uppercase;letter-spacing:.05em;}
+.qbox{background:#eef2f7;padding:.8rem 1.1rem;}
+.ql{font-size:12.5px;color:#6b7280;margin-bottom:2px;}.qv{font-size:15px;font-weight:700;color:#1a1a1a;}
 .adhead{background:white;padding:.9rem 1.1rem .5rem;display:flex;align-items:center;gap:9px;margin-top:1px;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
 .fields{background:white;padding:0 1.1rem .9rem;border-radius:0 0 12px 12px;box-shadow:0 2px 6px rgba(0,0,0,0.06);}
 .field{padding:.65rem 0;border-bottom:1px solid #f3f3f3;}.field:last-child{border-bottom:none;padding-bottom:.2rem;}
-.fq{font-size:12px;font-weight:700;color:#1a1a1a;margin-bottom:3px;}.fa{font-size:13px;color:#374151;line-height:1.55;}
-.abox{border-radius:0 6px 6px 0;padding:7px 11px;font-size:12px;line-height:1.5;margin-top:5px;}
+.fq{font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:3px;}.fa{font-size:15px;color:#374151;line-height:1.6;}
+.abox{border-radius:0 6px 6px 0;padding:8px 12px;font-size:14px;line-height:1.5;margin-top:5px;}
 .ared{background:#fee2e2;border-left:3px solid #dc2626;color:#7f1d1d;}
 .aora{background:#fff7ed;border-left:3px solid #ea580c;color:#7c2d12;}
 .aamb{background:#fef3c7;border-left:3px solid #d97706;color:#78350f;}
 .agre{background:#d1fae5;border-left:3px solid #059669;color:#064e3b;}
-.stag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;display:inline-block;margin-top:5px;}
+.stag{font-size:11px;font-weight:700;padding:2px 7px;border-radius:10px;display:inline-block;margin-top:5px;}
 .stm{background:#dbeafe;color:#1e40af;}.stia{background:#f3f4f6;color:#6b7280;}
-.nbadge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:5px;vertical-align:middle;}
+.nbadge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:5px;vertical-align:middle;}
 .n1b{background:#fecaca;color:#7f1d1d;}.n2b{background:#fed7aa;color:#7c2d12;}.n3b{background:#fef9c3;color:#713f12;}
 .mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;overflow-y:auto;padding:1rem;}
 .mbg.open{display:block;}
-.modal{background:white;border-radius:14px;max-width:640px;margin:48px auto 2rem;box-shadow:0 20px 50px rgba(0,0,0,0.18);animation:su .2s ease;}
+.modal{background:white;border-radius:14px;max-width:900px;margin:48px auto 2rem;box-shadow:0 20px 50px rgba(0,0,0,0.18);animation:su .2s ease;}
 @keyframes su{from{transform:translateY(12px);opacity:0;}to{transform:translateY(0);opacity:1;}}
 .mh{padding:.9rem 1.1rem;border-bottom:1px solid #e9ecef;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:white;border-radius:14px 14px 0 0;z-index:1;}
-.mhtit{font-size:13px;font-weight:800;color:#2d8c85;text-transform:uppercase;letter-spacing:.04em;}
+.mhtit{font-size:16px;font-weight:800;color:#1F3A5F;text-transform:uppercase;letter-spacing:.04em;}
 .mcl{width:28px;height:28px;border:1px solid #e5e7eb;border-radius:6px;background:white;cursor:pointer;font-size:16px;color:#9ca3af;display:flex;align-items:center;justify-content:center;}
 .mcl:hover{background:#f3f4f6;}
-.acat{background:#c8857e;color:white;padding:.55rem 1.1rem;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;}
+.acat{background:#34557F;color:white;padding:.65rem 1.2rem;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;display:flex;justify-content:space-between;align-items:center;cursor:pointer;user-select:none;}
 .ait{border-bottom:1px solid #e9ecef;}
-.aih{padding:.6rem 1.1rem;font-size:13px;font-weight:600;color:#374151;display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:#f8f9fa;user-select:none;}
-.aih:hover{background:#f0f4f3;}
-.aib{display:none;padding:.7rem 1.1rem .9rem;font-size:13px;color:#374151;line-height:1.7;background:white;border-top:1px solid #f0f0f0;}
+.aih{padding:.75rem 1.2rem;font-size:15.5px;font-weight:600;color:#374151;display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:#f8f9fa;user-select:none;}
+.aih:hover{background:#eef2f7;}
+.aib{display:none;padding:.8rem 1.3rem 1rem;font-size:14.5px;color:#374151;line-height:1.7;background:white;border-top:1px solid #f0f0f0;}
 .aib.open{display:block;}.aib ul{padding-left:15px;}.aib li{margin-bottom:4px;}
-.msrc{font-size:10px;color:#9ca3af;padding:.65rem 1.1rem;text-align:right;border-top:1px solid #e9ecef;}
-.msrc a{color:#2d8c85;text-decoration:none;}
+.msrc{font-size:11px;color:#9ca3af;padding:.65rem 1.1rem;text-align:right;border-top:1px solid #e9ecef;}
+.msrc a{color:#1F3A5F;text-decoration:none;}
+.neb{border:1px solid #c9d6e6;border-radius:8px;padding:.7rem .95rem;margin:.35rem 0 .2rem;background:#f8fafd;}
+.olst{padding-left:20px;}.olst>li{margin-bottom:7px;padding-left:3px;}.olst>li::marker{font-weight:800;color:#1F3A5F;}
+.disc{margin-top:2.2rem;padding-top:.8rem;border-top:1px solid #d1d5db;font-size:9.5px;color:#9ca3af;line-height:1.5;}
+.disc p{margin-bottom:3px;}.disc .dt{font-weight:700;color:#6b7280;margin-bottom:4px;}
+.nov-d{font-size:13px;font-weight:800;color:#1F3A5F;margin:.2rem 0 .35rem;}
+.nov-l{padding-left:18px;font-size:14px;color:#374151;line-height:1.6;margin-bottom:.9rem;}
+.ico{width:1.05em;height:1.05em;vertical-align:-.17em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+.rhico .ico{width:18px;height:18px;color:#1F3A5F;vertical-align:0;}
+.abox .ico{margin-right:4px;}
 </style>
 </head>
 <body>
 <header>
   <div class="hl">
-    <div class="hico">💊</div>
-    <div><div class="htit">SNG-Farma UCI</div><div class="hsub">UMI · Hospital Universitario San Pedro</div></div>
+    <div class="hico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-label="Sonda nasogástrica"><path d="M7.5 21.5v-4.2C5.9 16 5 13.8 5 11.3a7 7 0 0 1 13.5-2.6l1.6 4h-1.6v3.1a2 2 0 0 1-2 2h-2.4v3.7"/><path d="M18.7 11.4c-3.4 0-6.3.9-7 4.1l-.3 6"/><path d="M18.7 11.4c1.7.1 3 1 3.3 2.6"/></svg></div>
+    <div><div class="htit">SNG-Farma UMI</div><div class="hsub">UMI · Hospital Universitario San Pedro</div></div>
   </div>
   <div class="hright">
-    <button class="rbtn" onclick="openRec()">📋 Recomendaciones generales</button>
-    <div class="hdate">Actualizado: 03/08/2026</div>
+    <button class="rbtn" onclick="openRec()"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg> Recomendaciones generales</button>
+    <button class="hdate" onclick="openNov()" title="Ver novedades">Actualizado: 18/10/2026 · Novedades ›</button>
   </div>
 </header>
 
@@ -96,18 +106,25 @@ main{max-width:660px;margin:0 auto;padding:1.1rem 1rem 5rem;}
       <div class="sdd" id="dd"></div>
     </div>
     <div class="vrow">
-      <button class="vbtn on" id="v-g" onclick="setVia('G')">📍 Gastrostomía / SNG</button>
-      <button class="vbtn" id="v-y" onclick="setVia('Y')">📍 Yeyunostomía / SNY</button>
+      <button class="vbtn on" id="v-g" onclick="setVia('G')">SNG / Gastrostomía</button>
+      <button class="vbtn" id="v-y" onclick="setVia('Y')">SNY / Yeyunostomía</button>
     </div>
   </div>
   <div id="res"></div>
+  <div class="disc">
+    <p class="dt"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> Aviso importante</p>
+    <p>Esta herramienta ha sido desarrollada como apoyo a la consulta de información sobre administración de medicamentos por sonda enteral y compatibilidad con nutrición enteral para profesionales de la UMI del Hospital Universitario San Pedro (Logroño).</p>
+    <p>La información mostrada tiene carácter orientativo y <strong>no sustituye</strong> la valoración clínica individual, la consulta de fichas técnicas, protocolos institucionales o fuentes oficiales de información sobre medicamentos.</p>
+    <p>Uso restringido a profesionales sanitarios de la UMI del Hospital Universitario San Pedro. Las recomendaciones deben verificarse siempre con las fuentes oficiales y protocolos vigentes.</p>
+    <p>No autorizada su utilización como protocolo institucional ni su aplicación en otros centros sin validación local previa.</p>
+  </div>
 </main>
 
 <!-- MODAL RECOMENDACIONES -->
 <div class="mbg" id="mrec" onclick="if(event.target===this)closeRec()">
   <div class="modal">
     <div class="mh">
-      <div class="mhtit">📋 Recomendaciones generales SNG/SNY</div>
+      <div class="mhtit"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg> Recomendaciones generales SNG/SNY</div>
       <button class="mcl" onclick="closeRec()">×</button>
     </div>
     <div class="acat" onclick="tcat(this)">Recomendaciones generales <span>∧</span></div>
@@ -115,18 +132,17 @@ main{max-width:660px;margin:0 auto;padding:1.1rem 1rem 5rem;}
     <div class="aib"><ul>
       <li><strong>Nunca añadir fármacos al envase de NE.</strong></li>
       <li><strong>Una jeringa ENFit (morada) por fármaco.</strong> Nunca mezclar varios medicamentos en la misma jeringa.</li>
-      <li><strong>Orden de administración:</strong> primero los líquidos (menos viscosos), luego los más espesos, sólidos al final.</li>
     </ul></div></div>
     <div class="ait"><div class="aih" onclick="tacc(this)">Forma farmacéutica <span>∨</span></div>
     <div class="aib">
       <strong>Orden de preferencia:</strong> <strong>1.º Líquida</strong> → <strong>2.º Triturar</strong> → <strong>3.º Dispersar</strong><br>
-      <strong>NUNCA triturar:</strong> liberación modificada (retard/XR/LP/Crono). Cubierta entérica en SNG: NO triturar (en SNY sí).<br><br><div style="margin:5px 0 0;border:1px solid #d1e7e6;border-radius:6px;overflow:hidden;">
-          <div style="padding:7px 12px;background:#edf7f6;cursor:pointer;font-size:12px;font-weight:700;color:#0f766e;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
+      <strong>NUNCA triturar:</strong> liberación modificada (retard/XR/LP/Crono). Cubierta entérica en SNG: NO triturar (en SNY sí).<br><br><div style="margin:5px 0 0;border:1px solid #c9d6e6;border-radius:6px;overflow:hidden;">
+          <div style="padding:7px 12px;background:#e8eef6;cursor:pointer;font-size:14px;font-weight:700;color:#1F3A5F;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
             Formas líquidas (solución, suspensión, gotas, jarabe) <span>∨</span>
           </div>
-          <div style="display:none;padding:9px 13px;font-size:12.5px;color:#374151;line-height:1.7;background:white;">
+          <div style="display:none;padding:10px 15px;font-size:14px;color:#374151;line-height:1.7;background:white;">
             <ul>
-            <li>Forma de elección siempre que esté disponible.</li>
+            <li>Son la <strong>forma farmacéutica de elección</strong>. Dentro de estas, se prefieren <strong>suspensiones y soluciones</strong> frente a <strong>jarabes</strong>.</li>
             <li><strong>Atemperar</strong> si estaban refrigeradas antes de administrar.</li>
             <li><strong>Agitar bien</strong> antes de cargar en la jeringa.</li>
             <li>Diluir en agua antes de administrar:<br>
@@ -139,11 +155,11 @@ main{max-width:660px;margin:0 auto;padding:1.1rem 1rem 5rem;}
           </ul>
           </div>
         </div>
-      <div style="margin:5px 0 0;border:1px solid #d1e7e6;border-radius:6px;overflow:hidden;">
-          <div style="padding:7px 12px;background:#edf7f6;cursor:pointer;font-size:12px;font-weight:700;color:#0f766e;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
+      <div style="margin:5px 0 0;border:1px solid #c9d6e6;border-radius:6px;overflow:hidden;">
+          <div style="padding:7px 12px;background:#e8eef6;cursor:pointer;font-size:14px;font-weight:700;color:#1F3A5F;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
             Comprimidos <span>∨</span>
           </div>
-          <div style="display:none;padding:9px 13px;font-size:12.5px;color:#374151;line-height:1.7;background:white;">
+          <div style="display:none;padding:10px 15px;font-size:14px;color:#374151;line-height:1.7;background:white;">
             <strong>Verificar siempre que el comprimido se puede triturar</strong> (nunca retard/LP/XR/Crono ni cubierta entérica en SNG).<br><br>
             <strong>Técnica de trituración (UCI San Pedro):</strong>
             <ol style="margin:6px 0;padding-left:16px;">
@@ -157,11 +173,11 @@ main{max-width:660px;margin:0 auto;padding:1.1rem 1rem 5rem;}
             <strong style="color:#C0392B;">NUNCA triturar:</strong> liberación modificada (retard/LP/XR/Crono/SR), cubierta entérica en SNG, citostáticos en sólido.
           </div>
         </div>
-      <div style="margin:5px 0 0;border:1px solid #d1e7e6;border-radius:6px;overflow:hidden;">
-          <div style="padding:7px 12px;background:#edf7f6;cursor:pointer;font-size:12px;font-weight:700;color:#0f766e;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
+      <div style="margin:5px 0 0;border:1px solid #c9d6e6;border-radius:6px;overflow:hidden;">
+          <div style="padding:7px 12px;background:#e8eef6;cursor:pointer;font-size:14px;font-weight:700;color:#1F3A5F;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
             Cápsulas <span>∨</span>
           </div>
-          <div style="display:none;padding:9px 13px;font-size:12.5px;color:#374151;line-height:1.7;background:white;">
+          <div style="display:none;padding:10px 15px;font-size:14px;color:#374151;line-height:1.7;background:white;">
             <strong>Cápsulas de gelatina dura (polvo o pellets):</strong>
             <ol style="margin:6px 0;padding-left:16px;">
               <li>Abrir la cápsula con cuidado sobre la jeringa sin émbolo.</li>
@@ -177,71 +193,66 @@ main{max-width:660px;margin:0 auto;padding:1.1rem 1rem 5rem;}
             </ol>
           </div>
         </div>
-      <div style="margin:5px 0 0;border:1px solid #d1e7e6;border-radius:6px;overflow:hidden;">
-          <div style="padding:7px 12px;background:#edf7f6;cursor:pointer;font-size:12px;font-weight:700;color:#0f766e;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
+      <div style="margin:5px 0 0;border:1px solid #c9d6e6;border-radius:6px;overflow:hidden;">
+          <div style="padding:7px 12px;background:#e8eef6;cursor:pointer;font-size:14px;font-weight:700;color:#1F3A5F;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
             Comprimidos efervescentes <span>∨</span>
           </div>
-          <div style="display:none;padding:9px 13px;font-size:12.5px;color:#374151;line-height:1.7;background:white;">
+          <div style="display:none;padding:10px 15px;font-size:14px;color:#374151;line-height:1.7;background:white;">
             <ol style="margin:6px 0;padding-left:16px;">
               <li>Disolver el comprimido en <strong>≥30 ml de agua</strong>.</li>
               <li><strong>Esperar a que la efervescencia termine completamente</strong> antes de cargar en jeringa.</li>
               <li>Aspirar con jeringa ENFit y administrar.</li>
-              <li>Lavar con 5-10 ml agua adicionales para arrastrar restos.</li>
+              <li>Lavar con <strong>10-20 ml de agua (o más)</strong> para arrastrar restos.</li>
             </ol>
             <strong style="color:#C0392B;">No administrar con gas activo:</strong> puede distender la sonda y causar molestias al paciente.
           </div>
         </div>
-      <div style="margin:5px 0 0;border:1px solid #d1e7e6;border-radius:6px;overflow:hidden;">
-          <div style="padding:7px 12px;background:#edf7f6;cursor:pointer;font-size:12px;font-weight:700;color:#0f766e;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
+      <div style="margin:5px 0 0;border:1px solid #c9d6e6;border-radius:6px;overflow:hidden;">
+          <div style="padding:7px 12px;background:#e8eef6;cursor:pointer;font-size:14px;font-weight:700;color:#1F3A5F;display:flex;justify-content:space-between;align-items:center;" onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='block'?'none':'block';this.querySelector('span').textContent=b.style.display==='block'?'∧':'∨';">
             Sobres (polvo para solución) <span>∨</span>
           </div>
-          <div style="display:none;padding:9px 13px;font-size:12.5px;color:#374151;line-height:1.7;background:white;">
+          <div style="display:none;padding:10px 15px;font-size:14px;color:#374151;line-height:1.7;background:white;">
             <ol style="margin:6px 0;padding-left:16px;">
               <li>Verter el contenido del sobre en <strong>20-50 ml de agua</strong> (ver indicación específica del fármaco).</li>
               <li>Agitar hasta <strong>disolución o suspensión uniforme</strong>.</li>
               <li><strong>Administrar inmediatamente</strong> (algunos principios activos son inestables en solución).</li>
-              <li>Lavar con 10-15 ml agua adicionales.</li>
+              <li>Lavar con <strong>10-20 ml de agua (o más)</strong>.</li>
             </ol>
             <strong>SNY:</strong> usar siempre el volumen mayor de dilución (≥50 ml) para reducir la osmolaridad.
           </div>
         </div>
     </div></div>
     <div class="ait"><div class="aih" onclick="tacc(this)">Administración <span>∨</span></div>
-    <div class="aib"><ul>
+    <div class="aib"><ol class="olst">
       <li>Lavarse las manos antes de cada manipulación.</li>
-      <li>Cabecero <strong>30-45°</strong> durante la administración de NE.</li>
-      <li>Verificar compatibilidad del fármaco vía SNG/SNY, con NE y si es fármaco biopeligroso.</li>
-      <li><strong>Lavar la sonda una vez por turno con 50 ml de agua</strong> (si hay administración en la 1ª toma de cada turno, sirve también para comprobar permeabilidad).</li>
-      <li>Comprobar tipo y posición de la sonda.</li>
-      <li>Lavar la sonda con <strong>30 ml de agua</strong> para comprobar permeabilidad antes de la administración. No hace falta si coincide con el lavado de SNG/SNY programado.</li>
-      <li>
-        <strong style="color:#1B8A50;">Fármaco COMPATIBLE con NE:</strong> parar NE <strong>15 min</strong> antes para el lavado y la administración. Reanudar la NE inmediatamente al terminar.<br><br>
-        <strong style="color:#D35400;">Fármaco NO COMPATIBLE (norma general):</strong><br>
-        Parar NE → esperar <strong>30 min</strong> → administrar fármaco → esperar <strong>30 min</strong> → reiniciar NE.<br><br>
-        <strong style="color:#C0392B;">Fármaco NO COMPATIBLE — grupos especiales</strong> (indicado en ficha):<br>
-        Antibióticos (quinolonas, rifamicinas), antifúngicos azólicos, antivirales, antiepilépticos, inmunosupresores, levotiroxina y otros fármacos cuya eficacia se compromete con la NE:<br>
-        Parar NE → esperar <strong>1h</strong> → administrar → esperar <strong>2h</strong> → reiniciar NE.<br><br>
-        <strong style="color:#6C0EFF;">Fenitoína:</strong> Parar NE → esperar <strong>2h</strong> → administrar → esperar <strong>2h</strong> → reiniciar NE.<br><br>
-        <strong>Sin NE activa:</strong> tras administrar la medicación, <strong>pinzar la sonda 30 minutos.</strong>
+      <li>Comprobar <strong>tipo y posición de la sonda</strong>.</li>
+      <li>Verificar compatibilidad del fármaco <strong>vía SNG/SNY</strong>, <strong>con la NE</strong> y si es <strong>fármaco biopeligroso</strong>.</li>
+      <li>Posicionar al paciente con el <strong>cabecero de la cama incorporado al menos a 30-45°</strong> cuando se esté administrando la nutrición enteral y hasta <strong>30 minutos después</strong>.</li>
+      <li>Parar la NE según su compatibilidad con el fármaco:
+        <div class="neb">
+          <strong style="color:#1B8A50;">Fármaco COMPATIBLE con NE:</strong> parar NE <strong>15 min</strong> antes para el lavado y la administración. Reanudar la NE inmediatamente al terminar.<br><br>
+          <strong style="color:#D35400;">Fármaco NO COMPATIBLE (norma general):</strong><br>
+          Parar NE → esperar <strong>30 min</strong> → administrar fármaco → esperar <strong>30 min</strong> → reiniciar NE.<br><br>
+          <strong style="color:#C0392B;">Fármaco NO COMPATIBLE — grupos especiales</strong> (indicado en ficha):<br>
+          Antibióticos (quinolonas, rifamicinas), antifúngicos azólicos, antivirales, antiepilépticos, inmunosupresores y otros fármacos cuya eficacia se compromete con la NE:<br>
+          Parar NE → esperar <strong>1h</strong> → administrar → esperar <strong>2h</strong> → reiniciar NE.<br><br>
+          <strong style="color:#C0392B;">Levotiroxina:</strong> Parar NE → esperar <strong>1h</strong> → administrar → esperar <strong>1h</strong> → reiniciar NE.<br><br>
+          <strong style="color:#6C0EFF;">Fenitoína:</strong> Parar NE → esperar <strong>2h</strong> → administrar → esperar <strong>2h</strong> → reiniciar NE.
+        </div>
       </li>
-      <li>Lavar con <strong>10-15 ml de agua</strong> entre cada medicamento.</li>
+      <li>Lavar la sonda con <strong>30 ml de agua</strong> para comprobar permeabilidad antes de la administración. No hace falta si coincide con el lavado de SNG/SNY programado.</li>
+      <li>El <strong>orden de administración</strong> de los fármacos se realizará según la <strong>viscosidad</strong> de las formas farmacéuticas, <strong>comenzando por las formas líquidas</strong> y continuando en <strong>orden creciente de viscosidad</strong>, para prevenir así la <strong>obstrucción de la sonda</strong>.</li>
+      <li>Lavar con <strong>10-20 ml de agua (o más)</strong> entre medicamento y medicamento.</li>
       <li>Lavar con <strong>50 ml de agua</strong> al finalizar toda la medicación.</li>
-    </ul></div></div>
-    <div class="ait"><div class="aih" onclick="tacc(this)">Interacción fármacos–NE — Norma UCI San Pedro <span>∨</span></div>
-    <div class="aib">
-    <strong>Fármaco COMPATIBLE con NE:</strong> parar NE <strong>15 min antes</strong> para el lavado y la administración. Reanudar la NE inmediatamente al terminar.<br><br>
-    <strong>Fármaco NO COMPATIBLE (norma general):</strong><br>
-    Parar NE → esperar <strong>30 min</strong> → administrar fármaco → esperar <strong>30 min</strong> → reiniciar NE.<br><br>
-    <strong>Fármaco NO COMPATIBLE — grupos especiales (indicado en ficha):</strong><br>
-    Antibióticos (quinolonas, rifamicinas), antifúngicos azólicos, antivirales, antiepilépticos, inmunosupresores, levotiroxina y otros fármacos incompatibles cuya eficacia se compromete con la NE:<br>
-    Parar NE → esperar <strong>1h</strong> → administrar → esperar <strong>2h</strong> → reiniciar NE.<br>
-    <strong>Fenitoína:</strong> Parar NE → esperar <strong>2h</strong> → administrar → esperar <strong>2h</strong> → reiniciar NE.<br><br>
-    <strong>Si no hay NE activa:</strong> tras administrar la medicación, pinzar la sonda <strong>30 minutos</strong>.
-    </div></div>
+      <li>Reanudar la NE según el tiempo indicado en el paso 5. <strong>Sin NE activa:</strong> tras administrar la medicación, <strong>pinzar la sonda 30 minutos.</strong></li>
+    </ol>
+    <div style="margin-top:.6rem;padding-top:.55rem;border-top:1px dashed #d1d5db;">
+      <strong>Además:</strong> lavar la sonda <strong>una vez por turno con 50 ml de agua</strong> (si hay administración en la 1.ª toma de cada turno, sirve también para comprobar permeabilidad).
+    </div></div></div>
     <div class="ait"><div class="aih" onclick="tacc(this)">Medicamentos biopeligrosos — equipos de protección <span>∨</span></div>
     <div class="aib" style="padding:0;">
-      <div style="background:#7f1d1d;color:white;padding:7px 14px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;">&#128138; Formas farmacéuticas sólidas</div>
-      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <div style="background:#7f1d1d;color:white;padding:8px 14px;font-size:13.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg> Formas farmacéuticas sólidas</div>
+      <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
         <thead><tr style="background:#f3f4f6;">
           <th style="padding:7px 10px;text-align:left;border-bottom:2px solid #e5e7eb;width:20%;color:#374151;">Categoría</th>
           <th style="padding:7px 10px;text-align:left;border-bottom:2px solid #e5e7eb;width:40%;color:#374151;">Preparación</th>
@@ -249,19 +260,19 @@ main{max-width:660px;margin:0 auto;padding:1.1rem 1rem 5rem;}
         </tr></thead>
         <tbody>
           <tr style="border-bottom:1px solid #e5e7eb;vertical-align:top;">
-            <td style="padding:8px 10px;background:#fee2e2;"><strong style="color:#7f1d1d;">MP Riesgo 1 y 2</strong><br><span style="font-size:10px;color:#7f1d1d;">Residuos &#8594; <u>Contenedor azul</u></span></td>
+            <td style="padding:8px 10px;background:#fee2e2;"><strong style="color:#7f1d1d;">MP Riesgo 1 y 2</strong><br><span style="font-size:11px;color:#7f1d1d;">Residuos &#8594; <u>Contenedor azul</u></span></td>
             <td style="padding:8px 10px;"><strong>No se precisa protección especial</strong>, salvo que haya que <u>triturar o fraccionar</u>.<br><br>En ese caso, usar <strong>equipo triturador/cortador</strong> y EPIs:<br>&#8226; <strong>Guantes de nitrilo</strong><br>&#8226; <strong>Bata verde</strong><br>&#8226; <strong>Mascarilla FFP3</strong><br>&#8226; <strong>Gafas de protección</strong></td>
             <td style="padding:8px 10px;"><u><strong>Siempre con guantes de nitrilo.</strong></u><br><br>Si se ha triturado/fraccionado: mantener los <strong>EPIs anteriores</strong> también en la administración.</td>
           </tr>
           <tr style="vertical-align:top;">
-            <td style="padding:8px 10px;background:#fef9c3;"><strong style="color:#713f12;">MP Riesgo 3</strong><br><span style="font-size:10px;color:#713f12;">Residuos &#8594; <u>Bolsa verde</u></span></td>
+            <td style="padding:8px 10px;background:#fef9c3;"><strong style="color:#713f12;">MP Riesgo 3</strong><br><span style="font-size:11px;color:#713f12;">Residuos &#8594; <u>Bolsa verde</u></span></td>
             <td style="padding:8px 10px;"><strong>No se precisa protección especial</strong>, salvo situación de <u>riesgo reproductivo</u>.<br><br>En ese caso: seguir indicaciones de <strong>MP Riesgo 1 y 2</strong>.</td>
             <td style="padding:8px 10px;"><strong>No se precisa protección especial</strong>, salvo situación de <u>riesgo reproductivo</u>.<br><br>En ese caso: <strong>guantes de nitrilo</strong>; si se ha triturado: EPIs completos.</td>
           </tr>
         </tbody>
       </table>
-      <div style="background:#7f1d1d;color:white;padding:7px 14px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-top:10px;">&#128167; Formas farmacéuticas líquidas</div>
-      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <div style="background:#7f1d1d;color:white;padding:8px 14px;font-size:13.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-top:10px;"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg> Formas farmacéuticas líquidas</div>
+      <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
         <thead><tr style="background:#f3f4f6;">
           <th style="padding:7px 10px;text-align:left;border-bottom:2px solid #e5e7eb;width:20%;color:#374151;">Categoría</th>
           <th style="padding:7px 10px;text-align:left;border-bottom:2px solid #e5e7eb;width:40%;color:#374151;">Preparación</th>
@@ -269,27 +280,29 @@ main{max-width:660px;margin:0 auto;padding:1.1rem 1rem 5rem;}
         </tr></thead>
         <tbody>
           <tr style="border-bottom:1px solid #e5e7eb;vertical-align:top;">
-            <td style="padding:8px 10px;background:#fee2e2;"><strong style="color:#7f1d1d;">MP Riesgo 1</strong><br><span style="font-size:10px;color:#7f1d1d;">Residuos &#8594; <u>Contenedor azul</u></span></td>
+            <td style="padding:8px 10px;background:#fee2e2;"><strong style="color:#7f1d1d;">MP Riesgo 1</strong><br><span style="font-size:11px;color:#7f1d1d;">Residuos &#8594; <u>Contenedor azul</u></span></td>
             <td style="padding:8px 10px;">EPIs:<br>&#8226; <strong>Guantes de nitrilo</strong><br>&#8226; <strong>Bata verde</strong><br>&#8226; <strong>Mascarilla FFP3</strong></td>
             <td style="padding:8px 10px;" rowspan="2"><u><strong>Siempre con guantes de nitrilo.</strong></u><br><br>Añadir <strong>bata + protección ocular</strong> si riesgo de <u>salpicadura</u> (p.ej. por sonda o paciente no colaborador).<br><br>Si posibilidad de <u>inhalación</u> (polvos en suspensión o líquidos en aerosol): <strong>mascarilla FPP3.</strong></td>
           </tr>
           <tr style="border-bottom:1px solid #e5e7eb;vertical-align:top;">
-            <td style="padding:8px 10px;background:#fff7ed;"><strong style="color:#7c2d12;">MP Riesgo 2</strong><br><span style="font-size:10px;color:#7c2d12;">Residuos &#8594; <u>Contenedor azul</u></span></td>
+            <td style="padding:8px 10px;background:#fff7ed;"><strong style="color:#7c2d12;">MP Riesgo 2</strong><br><span style="font-size:11px;color:#7c2d12;">Residuos &#8594; <u>Contenedor azul</u></span></td>
             <td style="padding:8px 10px;">EPIs <strong><u>sobre paño absorbente</u></strong>:<br>&#8226; <strong>Guantes de nitrilo</strong><br>&#8226; <strong>Bata verde</strong><br>&#8226; <strong>Mascarilla FFP3</strong><br>&#8226; <strong>Gafas de protección</strong></td>
           </tr>
           <tr style="vertical-align:top;">
-            <td style="padding:8px 10px;background:#fef9c3;"><strong style="color:#713f12;">MP Riesgo 3</strong><br><span style="font-size:10px;color:#713f12;">Residuos &#8594; <u>Bolsa verde</u></span></td>
+            <td style="padding:8px 10px;background:#fef9c3;"><strong style="color:#713f12;">MP Riesgo 3</strong><br><span style="font-size:11px;color:#713f12;">Residuos &#8594; <u>Bolsa verde</u></span></td>
             <td style="padding:8px 10px;"><strong>No se precisa protección especial</strong>, salvo situación de <u>riesgo reproductivo</u>.<br><br>En ese caso: seguir indicaciones de <strong>MP Riesgo 2</strong>.</td>
             <td style="padding:8px 10px;"><strong>No se precisa protección especial</strong>, salvo situación de <u>riesgo reproductivo</u>.<br><br>En ese caso: seguir indicaciones de <strong>MP Riesgo 1 y 2</strong>.</td>
           </tr>
         </tbody>
       </table>
-      <div style="padding:7px 12px;font-size:11px;color:#6b7280;border-top:1px solid #e5e7eb;background:#f9fafb;">Líquidos R2: Espironolactona, Micofenolato de Mofetilo, Ciclosporina &#160;·&#160; Líquidos R3: Ácido Valproico (sol), Voriconazol (sol)</div>
-    </div>
+      <div style="padding:8px 12px;font-size:12.5px;color:#6b7280;border-top:1px solid #e5e7eb;background:#f9fafb;">Líquidos R2: Espironolactona, Micofenolato de Mofetilo, Ciclosporina &#160;·&#160; Líquidos R3: Ácido Valproico (sol), Voriconazol (sol)</div>
+    </div></div>
     <div class="ait"><div class="aih" onclick="tacc(this)">Cuidados del material <span>∨</span></div>
     <div class="aib"><ul>
       <li>Usar siempre <strong>jeringa ENFit (morada) de 50-60 ml</strong>. Nunca jeringas IV.</li>
-      <li>Lavar la jeringa con agua tras cada uso. Dejarla limpia y protegida para la siguiente administración. Vida útil máxima: <strong>3-4 días</strong>.</li>
+      <li>Lavar la jeringa con agua tras cada uso. Dejarla limpia y protegida para la siguiente administración.</li>
+      <li><strong>Jeringa ENFit:</strong> cambiar cada <strong>24 horas</strong>, a las <strong>16:00 h</strong> (inicio de las administraciones de NE).</li>
+      <li><strong>Adaptador de la jeringa ENFit para SNG:</strong> cambiar cada <strong>24 horas</strong>, a las <strong>16:00 h</strong>.</li>
       <li>Equipo de infusión de NE: cambiar cada <strong>24 horas</strong>.</li>
     </ul></div></div>
     <div class="ait"><div class="aih" onclick="tacc(this)">Resumen del procedimiento (UCI San Pedro) <span>∨</span></div>
@@ -667,7 +680,7 @@ const DB = [
 ["Saquinavir","Invirase®","Cap","Abrir cápsula, diluir 20 ml agua","Igual que gástrica","S","",0],
 ["Selegilina","Plurimen®","Comp","Desleír 10-20 ml agua","Igual que gástrica","S","Por la mañana con NE.",0],
 ["Sertralina","Sertralina EFG","Comp Rec","Desleír 10-20 ml agua","No estudiada (valorar Besitran® sol)","S","",0],
-["Sevelamer","Renvela®","Polvo","Disolver en 30 ml agua, administrar inmediatamente","Igual que gástrica","S","",0],
+["Sevelamer","Renvela®","Polvo","Disolver en 60 ml agua, administrar inmediatamente","Igual que gástrica","S","",0],
 ["Sevelamer","Renagel®","Comp Rec","Triturar, diluir 15-20 ml agua","Igual que gástrica","S","",0],
 ["Sildenafilo","Revatio®","Comp Rec","Desleír 10-20 ml agua","Igual que gástrica","S","",0],
 ["Silodosina","Silodyx®","Cap","Abrir cápsula, diluir 20 ml agua","NO post-pilórica","S","La solución no es uniforme.",0],
@@ -995,7 +1008,7 @@ function showResult(){
   const niosh=m?(m.n||0):(sel[7]||0);
   const neText=NE_TXT[ne]||ne;
   const fuente=m?'manual':'db';
-  const srcBadge=fuente==='manual'?'<span class="stag stm">✦ Protocolo H. San Pedro</span>':'<span class="stag stia">UMI · H. San Pedro</span>';
+  const srcBadge=fuente==='manual'?'<span class="stag stm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg> Protocolo H. San Pedro</span>':'<span class="stag stia">UMI · H. San Pedro</span>';
   const nioshBadge=niosh?`<span class="nbadge ${niosh===1?'n1b':niosh===2?'n2b':'n3b'}">MP R${niosh}</span>`:'';
   const isLiq=/sol jar|gts or|amp\/vial|amp\/|vial|sobre gra|polvo s|efv|sol jar/i.test(sel[2]);
   const nioshAlert=niosh?(()=>{
@@ -1005,26 +1018,26 @@ function showResult(){
     else if(niosh===2&&isLiq){cls='aora';msg='MP Riesgo 2 (forma líquida). Administrar con guantes de nitrilo. Añadir bata + protección ocular si riesgo de salpicadura (p.ej. por sonda o paciente no colaborador). Si posibilidad de inhalación: mascarilla FPP3. Residuos → Contenedor azul.';}
     else if(niosh===3&&!isLiq){cls='aamb';msg='MP Riesgo 3. No se precisa protección especial, salvo situación de riesgo reproductivo. En ese caso: guantes de nitrilo para administrar; si hay que triturar: equipo triturador + cortador manual + guantes + gafas. Residuos → Bolsa verde.';}
     else{cls='aamb';msg='MP Riesgo 3 (forma líquida). No se precisa protección especial, salvo situación de riesgo reproductivo. En ese caso: seguir las indicaciones de los grupos Riesgo 1 y 2. Residuos → Bolsa verde.';}
-    return `<div class="abox ${cls}">⚠️ ${msg}</div>`;
+    return `<div class="abox ${cls}"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>${msg}</div>`;
   })():'';
   const noAdm=(instr||'').startsWith('NO')||((instr||'').startsWith('Sustituir'));
-  const instrHTML=noAdm?`<div class="abox ared">⛔ ${esc(instr)}</div>`:`<div class="fa">${esc(instr)}</div>`;
+  const instrHTML=noAdm?`<div class="abox ared"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>${esc(instr)}</div>`:`<div class="fa">${esc(instr)}</div>`;
   const neClass=ne==='S'?'agre':'aamb';
   document.getElementById('res').innerHTML=`
   <div class="rw">
-    <div class="rhead"><div class="rhico">📋</div><div class="rhtit">Tu consulta</div></div>
+    <div class="rhead"><div class="rhico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div><div class="rhtit">Tu consulta</div></div>
     <div class="qbox">
       <div class="ql">Medicamento / principio activo:</div>
       <div class="qv">${esc(sel[0].toUpperCase())}${nioshBadge}</div>
       <div class="ql" style="margin-top:6px;">Nombre comercial:</div>
       <div class="qv" style="font-weight:500;">${esc(sel[1])}</div>
       <div class="ql" style="margin-top:6px;">Forma farmacéutica:</div>
-      <div class="qv"><span style="background:#e0f2f0;color:#0f766e;font-size:12px;padding:2px 9px;border-radius:10px;font-weight:700;">${esc(sel[2])}</span></div>
+      <div class="qv"><span style="background:#dde7f3;color:#1F3A5F;font-size:13.5px;padding:2px 10px;border-radius:10px;font-weight:700;">${esc(sel[2])}</span></div>
       <div class="ql" style="margin-top:6px;">Tipo de administración:</div>
-      <div class="qv">${via==='G'?'GASTROSTOMÍA / SNG':'YEYUNOSTOMÍA / SNY'}</div>
+      <div class="qv">${via==='G'?'SNG / GASTROSTOMÍA':'SNY / YEYUNOSTOMÍA'}</div>
       <div style="margin-top:6px;">${srcBadge}</div>
     </div>
-    <div class="adhead" style="margin-top:1px;box-shadow:0 1px 3px rgba(0,0,0,0.05);"><div class="rhico">💉</div><div class="rhtit">¿Cómo se administra?</div></div>
+    <div class="adhead" style="margin-top:1px;box-shadow:0 1px 3px rgba(0,0,0,0.05);"><div class="rhico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></svg></div><div class="rhtit">¿Cómo se administra?</div></div>
     <div class="fields">
       ${nioshAlert}
       <div class="field">
@@ -1034,36 +1047,55 @@ function showResult(){
       <div class="field">
         <div class="fq">¿Es compatible con la Nutrición Enteral?</div>
         <div class="fa">${esc(neText)}</div>
-        ${ne==='S'?`<div class="abox agre">✓ Compatible. Parar NE 15 min antes para administrar. Reanudar inmediatamente al terminar.</div>`:
-          (ne==='N2'||ne==='N_1H'||ne==='NLT')?`<div class="abox ared">⏱ ${esc(neText)}</div>`:
-          ne==='N1H'?`<div class="abox ared">⏱ ${esc(neText)}</div>`:
-          ne==='ND'||ne==='NV'?`<div class="abox agre">▶ ${esc(neText)}</div>`:
-          ne==='NF'?`<div class="abox agre">✓ ${esc(neText)}</div>`:
-          `<div class="abox aamb">⏱ ${esc(neText)}</div>`}
+        ${ne==='S'?`<div class="abox agre"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Compatible. Parar NE 15 min antes para administrar. Reanudar inmediatamente al terminar.</div>`:
+          (ne==='N2'||ne==='N_1H'||ne==='NLT')?`<div class="abox ared"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>${esc(neText)}</div>`:
+          ne==='N1H'?`<div class="abox ared"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>${esc(neText)}</div>`:
+          ne==='ND'||ne==='NV'?`<div class="abox agre"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>${esc(neText)}</div>`:
+          ne==='NF'?`<div class="abox agre"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>${esc(neText)}</div>`:
+          `<div class="abox aamb"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>${esc(neText)}</div>`}
       </div>
       ${rec?`<div class="field"><div class="fq">Además, debes tener en cuenta...</div><div class="fa">${esc(rec)}</div></div>`:''}
-    <div style="padding:5px 12px 8px;font-size:10px;color:#9ca3af;border-top:1px solid #f0f0f0;font-style:italic;">
-      💬 Si tienes dudas sobre este fármaco, consulta con el/la farmacéutico/a de guardia.
+    <div style="padding:6px 12px 9px;font-size:12px;color:#9ca3af;border-top:1px solid #f0f0f0;font-style:italic;">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg> Si tienes dudas sobre este fármaco, consulta con el/la farmacéutico/a de guardia.
     </div>
     </div>
   </div>`;
 }
 
+function openNov(){document.getElementById('mnov').classList.add('open');document.body.style.overflow='hidden';}
+function closeNov(){document.getElementById('mnov').classList.remove('open');document.body.style.overflow='';}
 function openRec(){document.getElementById('mrec').classList.add('open');document.body.style.overflow='hidden';}
 function closeRec(){document.getElementById('mrec').classList.remove('open');document.body.style.overflow='';}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeRec();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeRec();closeNov();}});
 document.addEventListener('click',e=>{if(!document.getElementById('srow').contains(e.target))hideDd();});
 function tcat(el){const sp=el.querySelector('span');const open=sp.textContent==='∧';let s=el.nextElementSibling;while(s&&!s.classList.contains('acat')){s.style.display=open?'none':'block';s=s.nextElementSibling;}sp.textContent=open?'∨':'∧';}
 function tacc(el){const b=el.nextElementSibling;const sp=el.querySelector('span');const o=b.classList.contains('open');b.classList.toggle('open',!o);sp.textContent=o?'∨':'∧';}
 function esc(s){if(!s&&s!==0)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 </script>
 
-<div style="max-width:660px;margin:2rem auto 0;padding:1rem;border-top:1px solid #d1d5db;font-size:11px;color:#9ca3af;line-height:1.6;">
-  <p style="font-weight:700;color:#6b7280;margin-bottom:6px;">⚠️ Aviso importante</p>
-  <p style="margin-bottom:5px;">Esta herramienta ha sido desarrollada como apoyo a la consulta de información sobre administración de medicamentos por sonda enteral y compatibilidad con nutrición enteral para profesionales de la UMI del Hospital Universitario San Pedro (Logroño).</p>
-  <p style="margin-bottom:5px;">La información mostrada tiene carácter orientativo y <strong>no sustituye</strong> la valoración clínica individual, la consulta de fichas técnicas, protocolos institucionales o fuentes oficiales de información sobre medicamentos.</p>
-  <p style="margin-bottom:5px;">Uso restringido a profesionales sanitarios de la UMI del Hospital Universitario San Pedro. Las recomendaciones deben verificarse siempre con las fuentes oficiales y protocolos vigentes.</p>
-  <p>No autorizada su utilización como protocolo institucional ni su aplicación en otros centros sin validación local previa.</p>
+
+<!-- MODAL NOVEDADES -->
+<div class="mbg" id="mnov" onclick="if(event.target===this)closeNov()">
+  <div class="modal" style="max-width:620px;">
+    <div class="mh">
+      <div class="mhtit"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg> Registro de novedades</div>
+      <button class="mcl" onclick="closeNov()">×</button>
+    </div>
+    <div style="padding:1rem 1.3rem .4rem;">
+      <div class="nov-d">18/10/2026</div>
+      <ul class="nov-l">
+        <li><strong>Medicamentos:</strong> Renvela® (sevelámero, polvo) — dilución ampliada a 60 ml de agua.</li>
+        <li><strong>Administración:</strong> reorganizada como secuencia numerada; incorporados el orden de administración por viscosidad, el lavado entre fármacos (10-20 ml o más) y la posición del cabecero hasta 30 min después.</li>
+        <li><strong>Interacción con NE:</strong> integrada en Administración (recuadro); levotiroxina separada de los grupos especiales (parar 1h antes / reanudar 1h después).</li>
+        <li><strong>Formas líquidas:</strong> preferencia de suspensiones y soluciones frente a jarabes.</li>
+        <li><strong>Cuidados del material:</strong> jeringa ENFit y adaptador ENFit para SNG — cambio cada 24 h a las 16:00 h.</li>
+        <li><strong>Lavados:</strong> unificados a 10-20 ml de agua (o más) tras cada fármaco, también en efervescentes y sobres.</li>
+        <li><strong>Interfaz:</strong> iconos emoji sustituidos por iconografía de línea homogénea; nuevo nombre (SNG-Farma UMI), color azul oscuro, texto más grande, nuevo icono y aviso legal visible en la página principal.</li>
+      </ul>
+      <div class="nov-d">03/08/2026</div>
+      <ul class="nov-l"><li>Versión previa (sin registro detallado).</li></ul>
+    </div>
+  </div>
 </div>
 </body>
 </html>
