@@ -92,7 +92,7 @@ main{max-width:740px;margin:0 auto;padding:1.1rem 1rem 2rem;}
   </div>
   <div class="hright">
     <button class="rbtn" onclick="openRec()"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg> Recomendaciones generales</button>
-    <button class="hdate" onclick="openNov()" title="Ver novedades">Actualizado: 18/10/2026 · Novedades ›</button>
+    <button class="hdate" onclick="openNov()" title="Ver novedades">Actualizado: 19/10/2026 · Novedades ›</button>
   </div>
 </header>
 
@@ -361,7 +361,7 @@ const DB = [
 ["Acetilcisteína","Acetilcisteína EFG","Sobre","Diluir en 50 ml agua","NO (pH<3.5, puede precipitar en yeyuno)","N1","Elevada osmolaridad. Preparar en el momento.",0],
 ["Ácido acetilsalicílico","AAS®","Comp","Desleír en 15-20 ml agua, administrar inmediatamente","Igual que gástrica","S","Preferentemente con NE para disminuir molestias GI.",0],
 ["Ácido acetilsalicílico","Aspirina®","Comp","Desleír en 10-20 ml agua, administrar inmediatamente","Igual que gástrica","S","Preferentemente con NE.",0],
-["Ácido acetilsalicílico","Adiro® 100 mg","Comp Ent","NO triturar (cubierta entérica). Sustituir por Aspirina® comp o AAS® comp.","NO triturar.","S","Solo existe la presentación de 100 mg. La de 300 mg fue retirada.",0],
+["Ácido acetilsalicílico","Adiro® 100 mg","Comp Ent","No compatible por sonda (cubierta entérica). Si es necesario administrarlo: triturar muy bien hasta obtener un polvo fino, dispersar en agua y lavar la sonda con algo más de agua de lo habitual para asegurar que queda limpia.","Triturar muy bien hasta obtener un polvo fino, dispersar en agua y lavar la sonda con algo más de agua de lo habitual para asegurar que queda limpia.","S","Solo existe la presentación de 100 mg. La de 300 mg fue retirada.",0],
 ["Ácido acetilsalicílico","Tromalyt®","Cap","NO triturar (microgránulos entéricos y LM). Sustituir por Aspirina® comp o AAS® comp.","NO triturar.","S","",0],
 ["Aciclovir","Aciclovir EFG","Comp","Triturar, diluir 15-20 ml agua","NO (pH<3.5, puede precipitar en yeyuno)","S","",0],
 ["Agomelatina","Valdoxan®","Comp Rec","Triturar, diluir 15-20 ml agua, administrar inmediatamente","Igual que gástrica","S","",0],
@@ -1020,8 +1020,9 @@ function showResult(){
     else{cls='aamb';msg='MP Riesgo 3 (forma líquida). No se precisa protección especial, salvo situación de riesgo reproductivo. En ese caso: seguir las indicaciones de los grupos Riesgo 1 y 2. Residuos → Bolsa verde.';}
     return `<div class="abox ${cls}"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>${msg}</div>`;
   })():'';
-  const noAdm=(instr||'').startsWith('NO')||((instr||'').startsWith('Sustituir'));
-  const instrHTML=noAdm?`<div class="abox ared"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>${esc(instr)}</div>`:`<div class="fa">${esc(instr)}</div>`;
+  const warnAdm=(instr||'').startsWith('No compatible por sonda');
+  const noAdm=!warnAdm&&((instr||'').startsWith('NO')||(instr||'').startsWith('Sustituir'));
+  const instrHTML=warnAdm?`<div class="abox aamb"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>${esc(instr)}</div>`:noAdm?`<div class="abox ared"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>${esc(instr)}</div>`:`<div class="fa">${esc(instr)}</div>`;
   const neClass=ne==='S'?'agre':'aamb';
   document.getElementById('res').innerHTML=`
   <div class="rw">
@@ -1082,6 +1083,10 @@ function esc(s){if(!s&&s!==0)return'';return String(s).replace(/&/g,'&amp;').rep
       <button class="mcl" onclick="closeNov()">×</button>
     </div>
     <div style="padding:1rem 1.3rem .4rem;">
+      <div class="nov-d">19/10/2026</div>
+      <ul class="nov-l">
+        <li><strong>Medicamentos:</strong> Adiro® 100 mg (ácido acetilsalicílico, comp. entérico) — marcado como no compatible por sonda (aviso en amarillo); si es necesario administrarlo, triturar muy bien y lavar la sonda con algo más de agua de lo habitual.</li>
+      </ul>
       <div class="nov-d">18/10/2026</div>
       <ul class="nov-l">
         <li><strong>Medicamentos:</strong> Renvela® (sevelámero, polvo) — dilución ampliada a 60 ml de agua. Potasion® cápsulas (cloruro potásico) — triturar muy bien las microcápsulas hasta polvo fino, sin dejar ninguna entera.</li>
